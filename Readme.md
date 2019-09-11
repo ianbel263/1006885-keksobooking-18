@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Андрей Беляев](https://up.htmlacademy.ru/javascript/18/user/1006885).
-* Наставник: `Неизвестно`.
+* Наставник: `Виктор Кан`.
 
 ---
 
