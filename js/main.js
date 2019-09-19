@@ -34,7 +34,7 @@ var MOCK = {
 
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 var generateRandomArr = function (arr) {
   var arrNew = [];
@@ -44,7 +44,7 @@ var generateRandomArr = function (arr) {
     }
   }
   return arrNew;
-}
+};
 
 var generateData = function () {
   var arr = [];
