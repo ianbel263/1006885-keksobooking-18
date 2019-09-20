@@ -8,28 +8,22 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pi
 var NUMBER_OF_ADS = 8;
 var MOCK = {
   author: {
-    avatar: 'img/avatars/user',
+    avatar: 'img/avatars/user{{xx}}.png',
   },
   offer: {
-    title: [Math.random().toString(36).substring(3), Math.random().toString(36).substring(3), Math.random().toString(36).substring(3)],
-    address: '',
+    title: '',
+    address: '{{location.x}}, {{location.y}}',
     price: {
       min: 0,
       max: 100000
     },
     type: ['palace', 'flat', 'house', 'bungalo'],
-    rooms: {
-      min: 1,
-      max: 5
-    },
-    guests: {
-      min: 0,
-      max: 5
-    },
+    rooms: 1,
+    guests: 0,
     checkin: ['12:00', '13:00', '14:00'],
     checkout: ['12:00', '13:00', '14:00'],
     features: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
-    description: [Math.random().toString(36).substring(3), Math.random().toString(36).substring(3), Math.random().toString(36).substring(3)],
+    description: '',
     photos: ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg']
   },
   location: {
@@ -60,16 +54,16 @@ var generateData = function () {
         avatar: MOCK.author.avatar + 0 + (i + 1) + '.png',
       },
       offer: {
-        title: MOCK.offer.title[getRandomInt(0, MOCK.offer.title.length - 1)],
+        title: Math.random().toString(36).substring(3),
         address: MOCK.offer.address,
         price: getRandomInt(MOCK.offer.price.min, MOCK.offer.price.max),
         type: MOCK.offer.type[getRandomInt(0, MOCK.offer.type.length - 1)],
-        rooms: getRandomInt(MOCK.offer.rooms.min, MOCK.offer.rooms.max),
-        guests: getRandomInt(MOCK.offer.guests.min, MOCK.offer.guests.max),
+        rooms: getRandomInt(0, 3),
+        guests: getRandomInt(0, 3),
         checkin: MOCK.offer.checkin[getRandomInt(0, MOCK.offer.checkin.length - 1)],
         checkout: MOCK.offer.checkout[getRandomInt(0, MOCK.offer.checkout.length - 1)],
         features: generateRandomArr(MOCK.offer.features),
-        description: MOCK.offer.description[getRandomInt(0, MOCK.offer.description.length - 1)],
+        description: Math.random().toString(36).substring(3),
         photos: generateRandomArr(MOCK.offer.photos)
       },
       location: {
