@@ -57,7 +57,7 @@ var generateData = function () {
   for (var i = 0; i < NUMBER_OF_ADS; i++) {
     arr[i] = {
       author: {
-        avatar: 'img/avatars/user' + 0 + (i + 1) + '.png',
+        avatar: MOCK.author.avatar + 0 + (i + 1) + '.png',
       },
       offer: {
         title: MOCK.offer.title[getRandomInt(0, MOCK.offer.title.length - 1)],
@@ -85,8 +85,8 @@ var generateData = function () {
 var renderPin = function (pin) {
   var pinElement = pinTemplate.cloneNode(true);
   pinElement.style = 'left: ' + pin.location.x + 'px; top: ' + pin.location.y + 'px;';
-  pinElement.childNodes[0].src = pin.author.avatar;
-  pinElement.childNodes[0].alt = pin.offer.title;
+  pinElement.querySelector('img').src = pin.author.avatar;
+  pinElement.querySelector('img').alt = pin.offer.title;
 
   return pinElement;
 };
@@ -101,5 +101,6 @@ var renderPins = function (arr) {
   mapPins.appendChild(fragment);
 };
 
+console.log(generateData());
 renderPins(generateData());
 
