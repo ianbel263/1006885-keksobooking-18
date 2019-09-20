@@ -51,7 +51,7 @@ var generateData = function () {
   for (var i = 0; i < NUMBER_OF_ADS; i++) {
     arr[i] = {
       author: {
-        avatar: 'img/avatars/user' + 0 + (i + 1) + '.png',
+        avatar: MOCK.author.avatar + 0 + (i + 1) + '.png',
       },
       offer: {
         title: Math.random().toString(36).substring(3),
