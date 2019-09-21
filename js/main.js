@@ -157,7 +157,7 @@ var renderAdPhotos = function (adPhotos) {
   }
 
   return photos;
-}
+};
 
 var renderCard = function (card) {
   var cardElement = cardTemplate.cloneNode(true);
