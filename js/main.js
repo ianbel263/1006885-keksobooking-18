@@ -32,7 +32,7 @@ var MOCK = {
     checkin: ['12:00', '13:00', '14:00'],
     checkout: ['12:00', '13:00', '14:00'],
     features: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
-    description: ['Aliquip ea magna. Sit duis deserunt cupidatat occaecat non officia laborum dolor tempor enim amet.', 'Aute amet ex nisi in culpa laboris ex amet amet exercitation eiusmod labore ullamco elit pariatur in consequat tempor.','Fugiat ullamco elit do ut velit amet quis mollit in proident sit ullamco sunt.'],
+    description: ['Aliquip ea magna. Sit duis deserunt cupidatat occaecat non officia laborum dolor tempor enim amet.', 'Aute amet ex nisi in culpa laboris ex amet amet exercitation eiusmod labore ullamco elit pariatur in consequat tempor.', 'Fugiat ullamco elit do ut velit amet quis mollit in proident sit ullamco sunt.'],
     photos: ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg']
   },
   location: {
@@ -147,7 +147,7 @@ var translateAdType = function (adType) {
 var renderAdFeatures = function (el, arr) {
   var list = el.querySelector('.popup__features');
   var items = list.querySelectorAll('.popup__feature');
-  items.forEach(function(element) {
+  items.forEach(function (element) {
     list.removeChild(element);
   });
   for (var i = 0; i < arr.length; i++) {
