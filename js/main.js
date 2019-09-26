@@ -1,13 +1,8 @@
 'use strict';
 
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
-var mapPins = map.querySelector('.map__pins');
-var mapFiltersContainer = map.querySelector('.map__filters-container');
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var ENTER_KEYCODE = 13;
 var PIN_WIDTH = 50;
-var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-
+var MAP_PIN_ARROW_HEIGHT = 22;
 var NUMBER_OF_ADS = 8;
 var MOCK = {
   author: {
@@ -40,6 +35,37 @@ var MOCK = {
     y: 350
   }
 };
+
+var map = document.querySelector('.map');
+var mapPin = map.querySelector('.map__pins');
+var mapPinMain = map.querySelector('.map__pin--main');
+var mapFiltersContainer = map.querySelector('.map__filters-container');
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
+var adForm = document.querySelector('.ad-form');
+var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
+var mapFilterForm = document.querySelector('.map__filters');
+var selectsMapFilterForm = mapFilterForm.querySelectorAll('select');
+var fieldsetsMapFilterForm = mapFilterForm.querySelectorAll('fieldset');
+var inputAddress = adForm.querySelector('input[name=address]');
+var selectRoomNumber = adForm.querySelector('#room_number');
+var selectCapacity = adForm.querySelector('#capacity');
+
+var mapPinMainX = Math.floor(parseInt(mapPinMain.style.left) + mapPinMain.offsetWidth / 2);
+var mapPinMainY = Math.floor(parseInt(mapPinMain.style.top) + mapPinMain.offsetHeight / 2);
+
+inputAddress.value = mapPinMainX + ', ' + mapPinMainY;
+
+var changeElementStatus = function (elementsArr, status) {
+  elementsArr.forEach(function (el) {
+    el.disabled = status;
+  });
+};
+
+changeElementStatus(fieldsetsAdForm, true);
+changeElementStatus(fieldsetsMapFilterForm, true);
+changeElementStatus(selectsMapFilterForm, true);
+
 
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -83,7 +109,7 @@ var generateData = function () {
         photos: generateRandomArr(MOCK.offer.photos, 1)
       },
       location: {
-        x: getRandomInt(0, map.clientWidth - PIN_WIDTH),
+        x: getRandomInt(0, map.clientWidth - PIN_WIDTH / 2),
         y: getRandomInt(130, 630)
       }
     };
@@ -102,44 +128,12 @@ var renderPin = function (pin) {
 };
 
 var renderPins = function (arr) {
-
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < arr.length; i++) {
     fragment.appendChild(renderPin(arr[i]));
   }
-
-  mapPins.appendChild(fragment);
+  mapPin.appendChild(fragment);
 };
-
-// var translateAdType = function (adType) {
-//   if (adType === 'palace') {
-//     var typeTranslated = 'Дворец';
-//   }
-//   if (adType === 'flat') {
-//     typeTranslated = 'Квартира';
-//   }
-//   if (adType === 'bungalo') {
-//     typeTranslated = 'Бунгало';
-//   }
-//   if (adType === 'house') {
-//     typeTranslated = 'Дом';
-//   }
-
-//   return typeTranslated;
-// };
-
-// var renderAdFeatures = function (el, arr) {
-//   var list = el.querySelector('.popup__features');
-//   var items = list.querySelectorAll('.popup__feature');
-//   items.forEach(function (element) {
-//     list.removeChild(element);
-//   });
-//   for (var i = 0; i < arr.length; i++) {
-//     var newItem = document.createElement('li');
-//     newItem.className = 'popup__feature popup__feature--' + arr[i];
-//     list.appendChild(newItem);
-//   }
-// };
 
 var renderAdPhotos = function (el, arr) {
   el.querySelector('.popup__photo').src = arr[0];
@@ -188,14 +182,63 @@ var renderCard = function (card) {
     cardElement.querySelector('.popup__photos').appendChild(newImg);
   }
 
-
-  // renderAdFeatures(cardElement, card.offer.features);
-  // renderAdPhotos(cardElement, card.offer.photos);
-
   fragment.appendChild(cardElement);
   map.insertBefore(fragment, mapFiltersContainer);
 };
 
-var data = generateData();
-renderPins(data);
-renderCard(data[0]);
+var setAddressInputValue = function () {
+  mapPinMainY = Math.floor(parseInt(mapPinMain.style.top) + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT);
+  inputAddress.value = mapPinMainX + ', ' + mapPinMainY;
+}
+
+var onMapPinMainMousedown = function () {
+  activatePage();
+  setAddressInputValue();
+};
+
+var onMapPinMainKeydown = function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    activatePage();
+    setAddressInputValue();
+  }
+}
+
+var activatePage = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  changeElementStatus(fieldsetsAdForm, false);
+  changeElementStatus(fieldsetsMapFilterForm, false);
+  changeElementStatus(selectsMapFilterForm, false);
+  // var data = generateData();
+  // renderPins(data);
+  // renderCard(data[0]);
+  mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
+  mapPinMain.removeEventListener('keydown', onMapPinMainKeydown);
+};
+
+mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
+mapPinMain.addEventListener('keydown', onMapPinMainKeydown);
+
+// console.log("selectRoomNumber", selectRoomNumber.value);
+// console.log("selectCapacity", selectCapacity.value);
+
+var checkCapacityValidity = function () {
+  if (selectCapacity.value !== selectRoomNumber.value) {
+    selectCapacity.setCustomValidity('Количество гостей должно быть равно количеству комнат');
+  } else selectCapacity.setCustomValidity('');
+};
+
+checkCapacityValidity();
+
+selectCapacity.addEventListener('change', function() {
+  checkCapacityValidity();
+});
+
+selectRoomNumber.addEventListener('change', function() {
+  checkCapacityValidity();
+});
+
+
+
+
+
