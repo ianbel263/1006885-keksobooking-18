@@ -55,6 +55,7 @@ var mapPinMainX = Math.floor(parseInt(mapPinMain.style.left) + mapPinMain.offset
 var mapPinMainY = Math.floor(parseInt(mapPinMain.style.top) + mapPinMain.offsetHeight / 2);
 
 inputAddress.value = mapPinMainX + ', ' + mapPinMainY;
+inputAddress.readOnly = true;
 
 var changeElementStatus = function (elementsArr, status) {
   elementsArr.forEach(function (el) {
@@ -209,9 +210,9 @@ var activatePage = function () {
   changeElementStatus(fieldsetsAdForm, false);
   changeElementStatus(fieldsetsMapFilterForm, false);
   changeElementStatus(selectsMapFilterForm, false);
-  // var data = generateData();
-  // renderPins(data);
-  // renderCard(data[0]);
+  var data = generateData();
+  renderPins(data);
+  renderCard(data[0]);
   mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
   mapPinMain.removeEventListener('keydown', onMapPinMainKeydown);
 };
@@ -219,13 +220,12 @@ var activatePage = function () {
 mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
 mapPinMain.addEventListener('keydown', onMapPinMainKeydown);
 
-// console.log("selectRoomNumber", selectRoomNumber.value);
-// console.log("selectCapacity", selectCapacity.value);
-
 var checkCapacityValidity = function () {
-  if (selectCapacity.value !== selectRoomNumber.value) {
-    selectCapacity.setCustomValidity('Количество гостей должно быть равно количеству комнат');
-  } else selectCapacity.setCustomValidity('');
+  if (parseInt(selectRoomNumber.value) < parseInt(selectCapacity.value)) {
+    selectCapacity.setCustomValidity('Количество гостей не должно быть больше количества комнат');
+  } else {
+    selectCapacity.setCustomValidity('');
+  }
 };
 
 checkCapacityValidity();
@@ -237,8 +237,3 @@ selectCapacity.addEventListener('change', function() {
 selectRoomNumber.addEventListener('change', function() {
   checkCapacityValidity();
 });
-
-
-
-
-
