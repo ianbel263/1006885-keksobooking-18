@@ -212,8 +212,19 @@ mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
 mapPinMain.addEventListener('keydown', onMapPinMainKeydown);
 
 var checkCapacityValidity = function () {
-  if (parseInt((selectRoomNumber.value), 10) < parseInt((selectCapacity.value), 10)) {
-    selectCapacity.setCustomValidity('Количество гостей не должно быть больше количества комнат');
+  if (parseInt(selectRoomNumber.value, 10) < parseInt(selectCapacity.value, 10)) {
+    if (parseInt(selectRoomNumber.value, 10) !== 100 || parseInt(selectCapacity.value, 10) !== 0) {
+      selectCapacity.setCustomValidity('Количество гостей не должно быть больше количества комнат');
+      console.log("parseInt(selectRoomNumber.value, 10)", parseInt(selectRoomNumber.value, 10));
+    }
+  } else if (parseInt(selectRoomNumber.value, 10) === 100 && parseInt(selectCapacity.value, 10) !== 0) {
+    selectCapacity.setCustomValidity('Для 100 комнат выберите значение "не для гостей"');
+    console.log("parseInt(selectRoomNumber.value, 10)", parseInt(selectRoomNumber.value, 10));
+  } else if (parseInt(selectRoomNumber.value, 10) !== 100 && parseInt(selectCapacity.value, 10) === 0) {
+    selectCapacity.setCustomValidity('Если выбираете "не для гостей", укажите количство комнат, равное 100');
+    console.log("parseInt(selectRoomNumber.value, 10)", parseInt(selectRoomNumber.value, 10));
+  } else if (parseInt(selectRoomNumber.value, 10) === 100 && parseInt(selectCapacity.value, 10) === 0) {
+    selectCapacity.setCustomValidity('');
   } else {
     selectCapacity.setCustomValidity('');
   }
