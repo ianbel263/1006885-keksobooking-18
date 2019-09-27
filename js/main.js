@@ -51,8 +51,8 @@ var inputAddress = adForm.querySelector('input[name=address]');
 var selectRoomNumber = adForm.querySelector('#room_number');
 var selectCapacity = adForm.querySelector('#capacity');
 
-var mapPinMainX = Math.floor(parseInt(mapPinMain.style.left) + mapPinMain.offsetWidth / 2);
-var mapPinMainY = Math.floor(parseInt(mapPinMain.style.top) + mapPinMain.offsetHeight / 2);
+var mapPinMainX = Math.floor(parseInt((mapPinMain.style.left), 10) + mapPinMain.offsetWidth / 2);
+var mapPinMainY = Math.floor(parseInt((mapPinMain.style.top), 10) + mapPinMain.offsetHeight / 2);
 
 inputAddress.value = mapPinMainX + ', ' + mapPinMainY;
 inputAddress.readOnly = true;
@@ -136,15 +136,6 @@ var renderPins = function (arr) {
   mapPin.appendChild(fragment);
 };
 
-var renderAdPhotos = function (el, arr) {
-  el.querySelector('.popup__photo').src = arr[0];
-  for (var i = 1; i < arr.length; i++) {
-    var newImg = el.querySelector('.popup__photo').cloneNode(true);
-    newImg.src = arr[i];
-    el.querySelector('.popup__photos').appendChild(newImg);
-  }
-};
-
 var renderCard = function (card) {
   var fragment = document.createDocumentFragment();
   var cardElement = cardTemplate.cloneNode(true);
@@ -177,7 +168,7 @@ var renderCard = function (card) {
   }
 
   cardElement.querySelector('.popup__photo').src = card.offer.photos[0];
-  for (var i = 1; i < card.offer.photos.length; i++) {
+  for (i = 1; i < card.offer.photos.length; i++) {
     var newImg = cardElement.querySelector('.popup__photo').cloneNode(true);
     newImg.src = card.offer.photos[i];
     cardElement.querySelector('.popup__photos').appendChild(newImg);
@@ -188,9 +179,9 @@ var renderCard = function (card) {
 };
 
 var setAddressInputValue = function () {
-  mapPinMainY = Math.floor(parseInt(mapPinMain.style.top) + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT);
+  mapPinMainY = Math.floor(parseInt((mapPinMain.style.top), 10) + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT);
   inputAddress.value = mapPinMainX + ', ' + mapPinMainY;
-}
+};
 
 var onMapPinMainMousedown = function () {
   activatePage();
@@ -202,7 +193,7 @@ var onMapPinMainKeydown = function (evt) {
     activatePage();
     setAddressInputValue();
   }
-}
+};
 
 var activatePage = function () {
   map.classList.remove('map--faded');
@@ -221,7 +212,7 @@ mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
 mapPinMain.addEventListener('keydown', onMapPinMainKeydown);
 
 var checkCapacityValidity = function () {
-  if (parseInt(selectRoomNumber.value) < parseInt(selectCapacity.value)) {
+  if (parseInt((selectRoomNumber.value), 10) < parseInt((selectCapacity.value), 10)) {
     selectCapacity.setCustomValidity('Количество гостей не должно быть больше количества комнат');
   } else {
     selectCapacity.setCustomValidity('');
@@ -230,10 +221,10 @@ var checkCapacityValidity = function () {
 
 checkCapacityValidity();
 
-selectCapacity.addEventListener('change', function() {
+selectCapacity.addEventListener('change', function () {
   checkCapacityValidity();
 });
 
-selectRoomNumber.addEventListener('change', function() {
+selectRoomNumber.addEventListener('change', function () {
   checkCapacityValidity();
 });
