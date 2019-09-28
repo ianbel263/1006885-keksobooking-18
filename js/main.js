@@ -178,6 +178,8 @@ var renderCard = function (card) {
   map.insertBefore(fragment, mapFiltersContainer);
 };
 
+var data = generateData();
+
 var setAddressInputValue = function () {
   mapPinMainY = Math.floor(parseInt((mapPinMain.style.top), 10) + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT);
   inputAddress.value = mapPinMainX + ', ' + mapPinMainY;
@@ -201,7 +203,6 @@ var activatePage = function () {
   changeElementStatus(fieldsetsAdForm, false);
   changeElementStatus(fieldsetsMapFilterForm, false);
   changeElementStatus(selectsMapFilterForm, false);
-  var data = generateData();
   renderPins(data);
   renderCard(data[0]);
   mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
@@ -212,20 +213,34 @@ mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
 mapPinMain.addEventListener('keydown', onMapPinMainKeydown);
 
 var checkCapacityValidity = function () {
-  if (parseInt(selectRoomNumber.value, 10) < parseInt(selectCapacity.value, 10)) {
-    if (parseInt(selectRoomNumber.value, 10) !== 100 || parseInt(selectCapacity.value, 10) !== 0) {
+  var roomValue = parseInt(selectRoomNumber.value, 10);
+  var capacityValue = parseInt(selectCapacity.value, 10);
+  if (roomValue < capacityValue) {
+    if (roomValue !== 100 || capacityValue !== 0) {
       selectCapacity.setCustomValidity('Количество гостей не должно быть больше количества комнат');
     }
-  } else if (parseInt(selectRoomNumber.value, 10) === 100 && parseInt(selectCapacity.value, 10) !== 0) {
+  } else if (roomValue === 100 && capacityValue !== 0) {
     selectCapacity.setCustomValidity('Для 100 комнат выберите значение "не для гостей"');
-  } else if (parseInt(selectRoomNumber.value, 10) !== 100 && parseInt(selectCapacity.value, 10) === 0) {
-    selectCapacity.setCustomValidity('Если выбираете "не для гостей", укажите количство комнат, равное 100');
-  } else if (parseInt(selectRoomNumber.value, 10) === 100 && parseInt(selectCapacity.value, 10) === 0) {
+  } else if (roomValue !== 100 && capacityValue === 0) {
+    selectCapacity.setCustomValidity('Если выбираете "не для гостей", укажите количество комнат, равное 100');
+  } else if (roomValue === 100 && capacityValue === 0) {
     selectCapacity.setCustomValidity('');
   } else {
     selectCapacity.setCustomValidity('');
   }
 };
+
+// var checkCapacityValidity = function () {
+//   var roomValue = parseInt(selectRoomNumber.value, 10);
+//   var capacityValue = parseInt(selectCapacity.value, 10);
+//   switch (capacityValue) {
+//     case capacityValue > roomValue:
+
+
+//     default:
+//       selectCapacity.setCustomValidity('');
+//   }
+// };
 
 checkCapacityValidity();
 
