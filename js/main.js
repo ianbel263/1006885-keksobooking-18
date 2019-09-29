@@ -230,18 +230,6 @@ var checkCapacityValidity = function () {
   }
 };
 
-// var checkCapacityValidity = function () {
-//   var roomValue = parseInt(selectRoomNumber.value, 10);
-//   var capacityValue = parseInt(selectCapacity.value, 10);
-//   switch (capacityValue) {
-//     case capacityValue > roomValue:
-
-
-//     default:
-//       selectCapacity.setCustomValidity('');
-//   }
-// };
-
 checkCapacityValidity();
 
 selectCapacity.addEventListener('change', function () {
