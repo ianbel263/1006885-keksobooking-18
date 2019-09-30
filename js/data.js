@@ -89,6 +89,6 @@
 
   window.data = {
     map: map,
-    data: generateData()
+    mockData: generateData()
   };
 })();
