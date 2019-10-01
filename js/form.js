@@ -14,6 +14,10 @@
   var inputAddress = adForm.querySelector('input[name=address]');
   var selectRoomNumber = adForm.querySelector('#room_number');
   var selectCapacity = adForm.querySelector('#capacity');
+  var selectType = adForm.querySelector('#type');
+  var inputPrice = adForm.querySelector('#price');
+  var selectTimeIn = adForm.querySelector('#timein');
+  var selectTimeOut = adForm.querySelector('#timeout');
 
   var mapPinMainX = Math.floor(parseInt((mapPinMain.style.left), 10) + mapPinMain.offsetWidth / 2);
   var mapPinMainY = Math.floor(parseInt((mapPinMain.style.top), 10) + mapPinMain.offsetHeight / 2);
@@ -36,15 +40,50 @@
     inputAddress.value = mapPinMainX + ', ' + mapPinMainY;
   };
 
-  var onMapPinMainMousedown = function () {
+  var doMapPinMainPressed = function () {
     activatePage();
     setAddressInputValue();
   };
 
+  var doMapPinPressed = function (iterator) {
+    //
+  };
+
+  var onMapPinMainMousedown = function () {
+    doMapPinMainPressed();
+  };
+
   var onMapPinMainKeydown = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-      activatePage();
-      setAddressInputValue();
+      doMapPinMainPressed();
+    }
+  };
+
+  var onMapPinClick = function (iterator) {
+    return function () {
+      var cards = document.querySelectorAll('.map__card');
+      cards.forEach(function (item, iter) {
+        item.classList.add('hidden');
+
+        if (iterator === iter) {
+          item.classList.remove('hidden');
+        }
+      });
+    };
+  };
+
+  var onMapPinKeydown = function (evt, iterator) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      return function () {
+        var cards = document.querySelectorAll('.map__card');
+        cards.forEach(function (item, iter) {
+          item.classList.add('hidden');
+
+          if (iterator === iter) {
+            item.classList.remove('hidden');
+          }
+        });
+      };
     }
   };
 
@@ -55,7 +94,27 @@
     changeElementStatus(fieldsetsMapFilterForm, false);
     changeElementStatus(selectsMapFilterForm, false);
     window.pin.renderPins(window.data.mockData);
-    window.card.renderCard(window.data.mockData[0]);
+
+    var mapPins = window.data.map.querySelectorAll('.map__pin + :not(.map__pin--main)');
+
+    mapPins.forEach(function (el, index) {
+      window.card.renderCard(window.data.mockData[index]);
+      el.addEventListener('click', onMapPinClick(index));
+      el.addEventListener('keydown', onMapPinKeydown(index));
+    });
+
+    // mapPins.forEach(function (el, index) {
+    //   var onMapPinClick = function () {
+    //     var card = document.querySelector('.map__card');
+    //     if (card !== null) {
+    //       card.remove();
+    //     }
+    //     window.card.renderCard(window.data.mockData[index]);
+    //   };
+    //   el.addEventListener('click', onMapPinClick);
+    // });
+
+
     mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
     mapPinMain.removeEventListener('keydown', onMapPinMainKeydown);
   };
@@ -81,13 +140,59 @@
     }
   };
 
-  checkCapacityValidity();
+  var checkPriceValidity = function () {
+    switch (selectType.value) {
+      case 'flat':
+        inputPrice.min = 1000;
+        inputPrice.placeholder = '1000';
+        break;
+      case 'bungalo':
+        inputPrice.min = 0;
+        inputPrice.placeholder = '0';
+        break;
+      case 'house':
+        inputPrice.min = 5000;
+        inputPrice.placeholder = '5000';
+        break;
+      case 'palace':
+        inputPrice.min = 10000;
+        inputPrice.placeholder = '10000';
+        break;
+    }
+  };
 
+  var checkTimeValidity = function (time1, time2) {
+    switch (time1.value) {
+      case '12:00':
+        time2.value = '12:00';
+        break;
+      case '13:00':
+        time2.value = '13:00';
+        break;
+      case '14:00':
+        time2.value = '14:00';
+        break;
+    }
+  };
+
+  checkCapacityValidity();
   selectCapacity.addEventListener('change', function () {
     checkCapacityValidity();
   });
-
   selectRoomNumber.addEventListener('change', function () {
     checkCapacityValidity();
+  });
+
+  checkPriceValidity();
+  selectType.addEventListener('change', function () {
+    checkPriceValidity();
+  });
+  checkTimeValidity(selectTimeIn, selectTimeOut);
+
+  selectTimeIn.addEventListener('change', function () {
+    checkTimeValidity(selectTimeIn, selectTimeOut);
+  });
+  selectTimeOut.addEventListener('change', function () {
+    checkTimeValidity(selectTimeOut, selectTimeIn);
   });
 })();

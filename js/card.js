@@ -42,6 +42,7 @@
       cardElement.querySelector('.popup__photos').appendChild(newImg);
     }
 
+    cardElement.classList.add('hidden');
     fragment.appendChild(cardElement);
     window.data.map.insertBefore(fragment, mapFiltersContainer);
   };
