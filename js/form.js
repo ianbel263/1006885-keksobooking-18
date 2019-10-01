@@ -54,8 +54,8 @@
     changeElementStatus(fieldsetsAdForm, false);
     changeElementStatus(fieldsetsMapFilterForm, false);
     changeElementStatus(selectsMapFilterForm, false);
-    window.renderPins(window.data.mockData);
-    window.renderCard(window.data.mockData[0]);
+    window.pin.renderPins(window.data.mockData);
+    window.card.renderCard(window.data.mockData[0]);
     mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
     mapPinMain.removeEventListener('keydown', onMapPinMainKeydown);
   };

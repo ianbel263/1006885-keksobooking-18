@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.renderCard = function (card) {
+  var renderCard = function (card) {
     var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
     var mapFiltersContainer = window.data.map.querySelector('.map__filters-container');
 
@@ -44,5 +44,9 @@
 
     fragment.appendChild(cardElement);
     window.data.map.insertBefore(fragment, mapFiltersContainer);
+  };
+
+  window.card = {
+    renderCard: renderCard
   };
 })();

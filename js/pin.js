@@ -13,11 +13,15 @@
     return pinElement;
   };
 
-  window.renderPins = function (arr) {
+  var renderPins = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arr.length; i++) {
       fragment.appendChild(renderPin(arr[i]));
     }
     mapPin.appendChild(fragment);
+  };
+
+  window.pin = {
+    renderPins: renderPins
   };
 })();
