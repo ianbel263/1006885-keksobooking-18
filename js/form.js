@@ -20,12 +20,6 @@
   var selectTimeIn = adForm.querySelector('#timein');
   var selectTimeOut = adForm.querySelector('#timeout');
 
-  var mapPinMainX = Math.floor(parseInt((mapPinMain.style.left), 10) + mapPinMain.offsetWidth / 2);
-  var mapPinMainY = Math.floor(parseInt((mapPinMain.style.top), 10) + mapPinMain.offsetHeight / 2);
-
-  inputAddress.value = mapPinMainX + ', ' + mapPinMainY;
-  inputAddress.readOnly = true;
-
   var changeElementStatus = function (elementsArr, status) {
     elementsArr.forEach(function (el) {
       el.disabled = status;
@@ -37,19 +31,14 @@
   changeElementStatus(selectsMapFilterForm, true);
 
   var setAddressInputValue = function () {
-    mapPinMainY = Math.floor(parseInt((mapPinMain.style.top), 10) + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT);
+    var mapPinMainX = Math.floor(parseInt((mapPinMain.style.left), 10) + mapPinMain.offsetWidth / 2);
+    var mapPinMainY = Math.floor(parseInt((mapPinMain.style.top), 10) + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT);
     inputAddress.value = mapPinMainX + ', ' + mapPinMainY;
   };
 
   var doMapPinMainPressed = function () {
     activatePage();
     setAddressInputValue();
-  };
-
-  var onPopupEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closeCardPopup();
-    }
   };
 
   var onMapPinMainMousedown = function () {
@@ -62,37 +51,30 @@
     }
   };
 
-  var openCardPopup = function (iterator) {
-    var cards = document.querySelectorAll('.map__card');
-    cards.forEach(function (el, index) {
-      el.classList.add('hidden');
+  var onEscPress = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closeCardPopup();
+    }
+  };
 
-      if (iterator === index) {
-        el.classList.remove('hidden');
-      }
-
-      el.querySelector('.popup__close').addEventListener('click', function () {
-        closeCardPopup();
-      });
-
-      el.querySelector('.popup__close').addEventListener('keydown', function (evt) {
-        if (evt.keyCode === ENTER_KEYCODE) {
-          closeCardPopup();
-        }
-      });
+  var openCardPopup = function (index) {
+    if (window.data.map.querySelector('.map__card')) {
+      window.data.map.querySelector('.map__card').remove();
+    }
+    window.card.renderCard(window.data.mockData[index]);
+    window.data.map.querySelector('.map__card').querySelector('.popup__close').addEventListener('click', function () {
+      closeCardPopup();
     });
-    document.addEventListener('keydown', onPopupEscPress);
+    document.addEventListener('keydown', onEscPress);
   };
 
   var closeCardPopup = function () {
-    var cards = document.querySelectorAll('.map__card');
-    cards.forEach(function (el) {
-      el.classList.add('hidden');
-    });
-    document.removeEventListener('keydown', onPopupEscPress);
+    window.data.map.querySelector('.map__card').remove();
+    document.removeEventListener('keydown', onEscPress);
   };
 
   var activatePage = function () {
+    inputAddress.readOnly = true;
     window.data.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     changeElementStatus(fieldsetsAdForm, false);
@@ -101,29 +83,11 @@
     window.pin.renderPins(window.data.mockData);
 
     var mapPins = window.data.map.querySelectorAll('.map__pin + :not(.map__pin--main)');
-
     mapPins.forEach(function (el, index) {
-      window.card.renderCard(window.data.mockData[index]);
       el.addEventListener('click', function () {
         openCardPopup(index);
       });
-      el.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === ENTER_KEYCODE) {
-          openCardPopup(index);
-        }
-      });
     });
-
-    // mapPins.forEach(function (el, index) {
-    //   var onMapPinClick = function () {
-    //     var card = document.querySelector('.map__card');
-    //     if (card !== null) {
-    //       card.remove();
-    //     }
-    //     window.card.renderCard(window.data.mockData[index]);
-    //   };
-    //   el.addEventListener('click', onMapPinClick);
-    // });
 
     mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
     mapPinMain.removeEventListener('keydown', onMapPinMainKeydown);
