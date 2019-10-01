@@ -46,7 +46,14 @@
   };
 
   var doMapPinPressed = function (iterator) {
-    //
+    var cards = document.querySelectorAll('.map__card');
+    cards.forEach(function (item, index) {
+      item.classList.add('hidden');
+
+      if (iterator === index) {
+        item.classList.remove('hidden');
+      }
+    });
   };
 
   var onMapPinMainMousedown = function () {
@@ -61,28 +68,14 @@
 
   var onMapPinClick = function (iterator) {
     return function () {
-      var cards = document.querySelectorAll('.map__card');
-      cards.forEach(function (item, iter) {
-        item.classList.add('hidden');
-
-        if (iterator === iter) {
-          item.classList.remove('hidden');
-        }
-      });
+      doMapPinPressed(iterator);
     };
   };
 
   var onMapPinKeydown = function (evt, iterator) {
     if (evt.keyCode === ENTER_KEYCODE) {
       return function () {
-        var cards = document.querySelectorAll('.map__card');
-        cards.forEach(function (item, iter) {
-          item.classList.add('hidden');
-
-          if (iterator === iter) {
-            item.classList.remove('hidden');
-          }
-        });
+        doMapPinPressed(iterator);
       };
     }
   };
