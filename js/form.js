@@ -51,7 +51,6 @@
   };
 
   var activatePage = function () {
-    inputAddress.readOnly = true;
     window.data.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     changeElementStatus(fieldsetsAdForm, false);
