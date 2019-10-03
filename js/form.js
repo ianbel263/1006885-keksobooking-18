@@ -51,12 +51,14 @@
   };
 
   var activatePage = function () {
+    window.backend.load(window.data.loadData, function (errMessage) {
+      console.log("errMessage", errMessage);
+    });
     window.data.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     changeElementStatus(fieldsetsAdForm, false);
     changeElementStatus(fieldsetsMapFilterForm, false);
     changeElementStatus(selectsMapFilterForm, false);
-    window.pin.renderPins(window.data.mockData);
 
     mapPinMain.removeEventListener('mousedown', onMapPinMainMousedown);
     mapPinMain.removeEventListener('keydown', onMapPinMainKeydown);

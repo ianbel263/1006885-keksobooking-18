@@ -36,6 +36,10 @@
   var PIN_WIDTH = 50;
   var map = document.querySelector('.map');
 
+  var loadData = function (arr) {
+    window.pin.renderPins(arr);
+  };
+
   var getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
@@ -89,6 +93,7 @@
 
   window.data = {
     map: map,
-    mockData: generateData()
+    mockData: generateData(),
+    loadData: loadData
   };
 })();
