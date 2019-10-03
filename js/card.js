@@ -50,11 +50,15 @@
     cardElement.querySelector('.popup__description').textContent = data.offer.description;
 
     featuresList.innerHTML = '';
-    for (var i = 0; i < data.offer.features.length; i++) {
-      var newItem = document.createElement('li');
-      newItem.className = 'popup__feature popup__feature--' + data.offer.features[i];
-      featuresList.appendChild(newItem);
-    }
+    if (data.offer.features.length) {
+      for (var i = 0; i < data.offer.features.length; i++) {
+        var newItem = document.createElement('li');
+        newItem.className = 'popup__feature popup__feature--' + data.offer.features[i];
+        featuresList.appendChild(newItem);
+      }
+    } else {
+        featuresList.classList.add('hidden');
+      }
 
     cardElement.querySelector('.popup__photo').src = data.offer.photos[0];
     for (i = 1; i < data.offer.photos.length; i++) {
