@@ -33,11 +33,11 @@
 
   var checkData = function (data, node) {
     Object.keys(data.offer).forEach(function (key) {
-      if (typeof(this[key]) === 'object' && !this[key].length) {
+      if (typeof (this[key]) === 'object' && !this[key].length) {
         addClassHidden(key, node);
-      } else if (typeof(this[key]) === 'undefined' || this[key] === '') {
-          addClassHidden(key, node);
-        }
+      } else if (typeof (this[key]) === 'undefined' || this[key] === '') {
+        addClassHidden(key, node);
+      }
     }, data.offer);
   };
 

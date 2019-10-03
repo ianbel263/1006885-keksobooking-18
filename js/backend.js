@@ -29,5 +29,5 @@
 
   window.backend = {
     load: load
-  }
+  };
 })();

@@ -51,9 +51,7 @@
   };
 
   var activatePage = function () {
-    window.backend.load(window.data.loadData, function (errMessage) {
-      console.log("errMessage", errMessage);
-    });
+    window.backend.load(window.data.loadData, window.data.onLoadError);
     window.data.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     changeElementStatus(fieldsetsAdForm, false);
