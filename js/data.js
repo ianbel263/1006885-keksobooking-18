@@ -34,7 +34,19 @@
     }
   };
   var PIN_WIDTH = 50;
+  var main = document.querySelector('main');
   var map = document.querySelector('.map');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+
+  var loadData = function (arr) {
+    window.pin.renderPins(arr);
+  };
+
+  var onLoadError = function (errMessage) {
+    var errorBlock = errorTemplate.cloneNode(true);
+    errorBlock.querySelector('.error__message').textContent = errMessage;
+    main.appendChild(errorBlock);
+  };
 
   var getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -89,6 +101,8 @@
 
   window.data = {
     map: map,
-    mockData: generateData()
+    mockData: generateData(),
+    loadData: loadData,
+    onLoadError: onLoadError
   };
 })();

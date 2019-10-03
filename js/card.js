@@ -21,8 +21,24 @@
     var checkNode = window.data.map.querySelector('.map__card');
     if (checkNode) {
       checkNode.remove();
+      window.removeEventListener('keydown', onEscPress);
     }
-    window.removeEventListener('keydown', onEscPress);
+  };
+
+  var addClassHidden = function (key, node) {
+    var nodeClass = '.popup__' + key;
+    node.querySelector(nodeClass).innerHTML = '';
+    node.querySelector(nodeClass).classList.add('hidden');
+  };
+
+  var checkData = function (data, node) {
+    Object.keys(data.offer).forEach(function (key) {
+      if (typeof (this[key]) === 'object' && !this[key].length) {
+        addClassHidden(key, node);
+      } else if (typeof (this[key]) === 'undefined' || this[key] === '') {
+        addClassHidden(key, node);
+      }
+    }, data.offer);
   };
 
   var createCard = function (data) {
@@ -67,11 +83,14 @@
       closePopup();
     });
 
+    checkData(data, cardElement);
+
     return cardElement;
   };
 
   window.card = {
     createCard: createCard,
-    openPopup: openPopup
+    openPopup: openPopup,
+    checkData: checkData
   };
 })();
