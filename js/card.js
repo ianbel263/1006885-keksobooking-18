@@ -21,8 +21,8 @@
     var checkNode = window.data.map.querySelector('.map__card');
     if (checkNode) {
       checkNode.remove();
+      window.removeEventListener('keydown', onEscPress);
     }
-    window.removeEventListener('keydown', onEscPress);
   };
 
   var createCard = function (data) {
