@@ -25,6 +25,22 @@
     }
   };
 
+  var addClassHidden = function (key, node) {
+    var nodeClass = '.popup__' + key;
+    node.querySelector(nodeClass).innerHTML = '';
+    node.querySelector(nodeClass).classList.add('hidden');
+  };
+
+  var checkData = function (data, node) {
+    Object.keys(data.offer).forEach(function (key) {
+      if (typeof(this[key]) === 'object' && !this[key].length) {
+        addClassHidden(key, node);
+      } else if (typeof(this[key]) === 'undefined' || this[key] === '') {
+          addClassHidden(key, node);
+        }
+    }, data.offer);
+  };
+
   var createCard = function (data) {
     var cardElement = cardTemplate.cloneNode(true);
     var featuresList = cardElement.querySelector('.popup__features');
@@ -50,15 +66,11 @@
     cardElement.querySelector('.popup__description').textContent = data.offer.description;
 
     featuresList.innerHTML = '';
-    if (data.offer.features.length) {
-      for (var i = 0; i < data.offer.features.length; i++) {
-        var newItem = document.createElement('li');
-        newItem.className = 'popup__feature popup__feature--' + data.offer.features[i];
-        featuresList.appendChild(newItem);
-      }
-    } else {
-        featuresList.classList.add('hidden');
-      }
+    for (var i = 0; i < data.offer.features.length; i++) {
+      var newItem = document.createElement('li');
+      newItem.className = 'popup__feature popup__feature--' + data.offer.features[i];
+      featuresList.appendChild(newItem);
+    }
 
     cardElement.querySelector('.popup__photo').src = data.offer.photos[0];
     for (i = 1; i < data.offer.photos.length; i++) {
@@ -71,11 +83,14 @@
       closePopup();
     });
 
+    checkData(data, cardElement);
+
     return cardElement;
   };
 
   window.card = {
     createCard: createCard,
-    openPopup: openPopup
+    openPopup: openPopup,
+    checkData: checkData
   };
 })();
