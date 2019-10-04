@@ -2,11 +2,19 @@
 
 (function () {
   var map = document.querySelector('.map');
-  var MAP_PIN_MAIN_X_MIN = 0;
-  var MAP_PIN_MAIN_X_MAX = map.offsetWidth;
-  var MAP_PIN_MAIN_Y_MIN = 130;
-  var MAP_PIN_MAIN_Y_MAX = 630;
+
   var NUMBER_OF_ADS = 8;
+  var ADDRESS_COORDS_LIMIT = {
+    x: {
+      min: 0,
+      max: map.offsetWidth
+    },
+    y: {
+      min: 130,
+      max: 630
+    }
+  }
+
   var MOCK = {
     author: {
       avatar: 'img/avatars/user',
@@ -81,8 +89,8 @@
           photos: generateRandomArr(MOCK.offer.photos, 1)
         },
         location: {
-          x: getRandomInt(MAP_PIN_MAIN_X_MIN, MAP_PIN_MAIN_X_MAX),
-          y: getRandomInt(MAP_PIN_MAIN_Y_MIN, MAP_PIN_MAIN_Y_MAX)
+          x: getRandomInt(ADDRESS_COORDS_LIMIT.x.min, ADDRESS_COORDS_LIMIT.x.max),
+          y: getRandomInt(ADDRESS_COORDS_LIMIT.y.min, ADDRESS_COORDS_LIMIT.y.max)
         }
       };
       arr[i].offer.address = arr[i].location.x + ', ' + arr[i].location.y;
@@ -93,9 +101,6 @@
   window.data = {
     map: map,
     mockData: generateData(),
-    MAP_PIN_MAIN_X_MIN: MAP_PIN_MAIN_X_MIN,
-    MAP_PIN_MAIN_X_MAX: MAP_PIN_MAIN_X_MAX,
-    MAP_PIN_MAIN_Y_MIN: MAP_PIN_MAIN_Y_MIN,
-    MAP_PIN_MAIN_Y_MAX: MAP_PIN_MAIN_Y_MAX
+    ADDRESS_COORDS_LIMIT: ADDRESS_COORDS_LIMIT
   };
 })();
