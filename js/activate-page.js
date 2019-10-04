@@ -52,7 +52,7 @@
   };
 
   var isPageActive = false;
-  var currentMapPinMainCoords = {
+  var currentCoords = {
     x: mapPinMain.offsetLeft,
     y: mapPinMain.offsetTop
   };
@@ -83,26 +83,28 @@
         y: moveEvt.clientY
       };
 
-      currentMapPinMainCoords = {
+      currentCoords = {
         x: mapPinMain.offsetLeft - shift.x,
         y: mapPinMain.offsetTop - shift.y
       };
 
-      if (currentMapPinMainCoords.x >= mapPinCoordsLimit.x.min && currentMapPinMainCoords.x <= mapPinCoordsLimit.x.max) {
-        if (currentMapPinMainCoords.y >= mapPinCoordsLimit.y.min && currentMapPinMainCoords.y <= mapPinCoordsLimit.y.max) {
-          mapPinMain.style.left = currentMapPinMainCoords.x + 'px';
-          mapPinMain.style.top = currentMapPinMainCoords.y + 'px';
-        }
-      }
+      currentCoords.x = (currentCoords.x < mapPinCoordsLimit.x.min) ? mapPinCoordsLimit.x.min : currentCoords.x;
+      currentCoords.x = (currentCoords.x > mapPinCoordsLimit.x.max) ? mapPinCoordsLimit.x.max : currentCoords.x;
 
-      setAddressInputValue(currentMapPinMainCoords);
+      currentCoords.y = (currentCoords.y < mapPinCoordsLimit.y.min) ? mapPinCoordsLimit.y.min : currentCoords.y;
+      currentCoords.y = (currentCoords.y > mapPinCoordsLimit.y.max) ? mapPinCoordsLimit.y.max : currentCoords.y;
+
+      mapPinMain.style.left = currentCoords.x + 'px';
+      mapPinMain.style.top = currentCoords.y + 'px';
+
+      setAddressInputValue(currentCoords);
     };
 
     var onMapPinMainMouseup = function (upEvt) {
       upEvt.preventDefault();
 
       if (!isMoved) {
-        setAddressInputValue(currentMapPinMainCoords);
+        setAddressInputValue(currentCoords);
       }
 
       document.removeEventListener('mousemove', onMapPinMainMousemove);
@@ -118,7 +120,7 @@
     if (evt.keyCode === ENTER_KEYCODE) {
       activatePage(isPageActive);
       isPageActive = true;
-      setAddressInputValue(currentMapPinMainCoords);
+      setAddressInputValue(currentCoords);
     }
   };
 

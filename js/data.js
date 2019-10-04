@@ -12,7 +12,7 @@
   var onLoadError = function (errMessage) {
     var errorBlock = errorTemplate.cloneNode(true);
     errorBlock.querySelector('.error__message').textContent = errMessage;
-    errorBlock.querySelector('.error__button').addEventListener('click', function() {
+    errorBlock.querySelector('.error__button').addEventListener('click', function () {
       window.backend.load(window.data.loadData, window.data.onLoadError);
       if (errorBlock) {
         errorBlock.remove();
