@@ -54,5 +54,5 @@
     map: map,
     adForm: adForm,
     activatePage: activatePage
-  }
+  };
 })();
