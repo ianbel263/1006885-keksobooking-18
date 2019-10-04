@@ -60,6 +60,7 @@
   var onMapPinMainMousedown = function (evt) {
     evt.preventDefault();
 
+    var isMoved = false;
     activatePage(isPageActive);
     isPageActive = true;
 
@@ -71,6 +72,7 @@
     var onMapPinMainMousemove = function (moveEvt) {
       moveEvt.preventDefault();
 
+      isMoved = true;
       var shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY
@@ -99,7 +101,9 @@
     var onMapPinMainMouseup = function (upEvt) {
       upEvt.preventDefault();
 
-      setAddressInputValue(currentMapPinMainCoords);
+      if (!isMoved) {
+        setAddressInputValue(currentMapPinMainCoords);
+      }
 
       document.removeEventListener('mousemove', onMapPinMainMousemove);
       document.removeEventListener('mouseup', onMapPinMainMouseup);
