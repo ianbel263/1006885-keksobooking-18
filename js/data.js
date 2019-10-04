@@ -113,7 +113,6 @@
     mockData: generateData(),
     loadData: loadData,
     onLoadError: onLoadError
-    mockData: generateData(),
     ADDRESS_COORDS_LIMIT: ADDRESS_COORDS_LIMIT
   };
 })();
