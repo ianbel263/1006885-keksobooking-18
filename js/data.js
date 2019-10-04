@@ -1,7 +1,20 @@
 'use strict';
 
 (function () {
+  var map = document.querySelector('.map');
+
   var NUMBER_OF_ADS = 8;
+  var ADDRESS_COORDS_LIMIT = {
+    x: {
+      min: 0,
+      max: map.offsetWidth
+    },
+    y: {
+      min: 130,
+      max: 630
+    }
+  }
+
   var MOCK = {
     author: {
       avatar: 'img/avatars/user',
@@ -33,10 +46,6 @@
       y: 350
     }
   };
-  var PIN_WIDTH = 50;
-  var main = document.querySelector('main');
-  var map = document.querySelector('.map');
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
   var loadData = function (arr) {
     window.pin.renderPins(arr);
@@ -90,8 +99,8 @@
           photos: generateRandomArr(MOCK.offer.photos, 1)
         },
         location: {
-          x: getRandomInt(0, map.clientWidth - PIN_WIDTH / 2),
-          y: getRandomInt(130, 630)
+          x: getRandomInt(ADDRESS_COORDS_LIMIT.x.min, ADDRESS_COORDS_LIMIT.x.max),
+          y: getRandomInt(ADDRESS_COORDS_LIMIT.y.min, ADDRESS_COORDS_LIMIT.y.max)
         }
       };
       arr[i].offer.address = arr[i].location.x + ', ' + arr[i].location.y;
@@ -104,5 +113,6 @@
     mockData: generateData(),
     loadData: loadData,
     onLoadError: onLoadError
+    ADDRESS_COORDS_LIMIT: ADDRESS_COORDS_LIMIT
   };
 })();
