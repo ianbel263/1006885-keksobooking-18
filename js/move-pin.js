@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var mapPinMain = window.data.map.querySelector('.map__pin--main');
+  var mapPinMain = window.actPage.map.querySelector('.map__pin--main');
   var mapPinMainHalfWidth = Math.floor(mapPinMain.offsetWidth / 2);
   var MAP_PIN_ARROW_HEIGHT = 22;
 
@@ -9,7 +9,7 @@
   var ADDRESS_COORDS_LIMIT = {
     x: {
       min: 0,
-      max: window.data.map.offsetWidth
+      max: window.actPage.map.offsetWidth
     },
     y: {
       min: 130,
@@ -28,22 +28,7 @@
     }
   };
 
-  var mapFilterForm = document.querySelector('.map__filters');
-  var selectsMapFilterForm = mapFilterForm.querySelectorAll('select');
-  var fieldsetsMapFilterForm = mapFilterForm.querySelectorAll('fieldset');
-
-  var fieldsetsAdForm = window.form.adForm.querySelectorAll('fieldset');
-  var inputAddress = window.form.adForm.querySelector('input[name=address]');
-
-  var changeElementStatus = function (elementsArr, isTrue) {
-    elementsArr.forEach(function (el) {
-      el.disabled = isTrue;
-    });
-  };
-
-  changeElementStatus(fieldsetsAdForm, true);
-  changeElementStatus(fieldsetsMapFilterForm, true);
-  changeElementStatus(selectsMapFilterForm, true);
+  var inputAddress = window.actPage.adForm.querySelector('input[name=address]');
 
   var setAddressInputValue = function (obj) {
     obj.x = obj.x + Math.round(mapPinMain.offsetWidth / 2);
@@ -61,7 +46,7 @@
     evt.preventDefault();
 
     var isMoved = false;
-    activatePage(isPageActive);
+    window.actPage.activatePage(isPageActive);
     isPageActive = true;
 
     var startCoords = {
@@ -118,23 +103,13 @@
 
   var onMapPinMainKeydown = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-      activatePage(isPageActive);
+      window.actPage.activatePage(isPageActive);
       isPageActive = true;
       setAddressInputValue(currentCoords);
     }
   };
 
-  var activatePage = function (isPageActivated) {
-    if (!isPageActivated) {
-      window.backend.load(window.data.loadData, window.data.onLoadError);
-      window.data.map.classList.remove('map--faded');
-      window.form.adForm.classList.remove('ad-form--disabled');
-      changeElementStatus(fieldsetsAdForm, false);
-      changeElementStatus(fieldsetsMapFilterForm, false);
-      changeElementStatus(selectsMapFilterForm, false);
-    }
-  };
-
   mapPinMain.addEventListener('mousedown', onMapPinMainMousedown);
   mapPinMain.addEventListener('keydown', onMapPinMainKeydown);
+
 })();

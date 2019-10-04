@@ -2,13 +2,12 @@
 
 (function () {
 
-  var adForm = document.querySelector('.ad-form');
-  var selectRoomNumber = adForm.querySelector('#room_number');
-  var selectCapacity = adForm.querySelector('#capacity');
-  var selectType = adForm.querySelector('#type');
-  var inputPrice = adForm.querySelector('#price');
-  var selectTimeIn = adForm.querySelector('#timein');
-  var selectTimeOut = adForm.querySelector('#timeout');
+  var selectRoomNumber = window.actPage.adForm.querySelector('#room_number');
+  var selectCapacity = window.actPage.adForm.querySelector('#capacity');
+  var selectType = window.actPage.adForm.querySelector('#type');
+  var inputPrice = window.actPage.adForm.querySelector('#price');
+  var selectTimeIn = window.actPage.adForm.querySelector('#timein');
+  var selectTimeOut = window.actPage.adForm.querySelector('#timeout');
 
   var checkCapacityValidity = function () {
     var roomValue = parseInt(selectRoomNumber.value, 10);
@@ -83,8 +82,4 @@
   selectTimeOut.addEventListener('change', function () {
     checkTimeValidity(selectTimeOut, selectTimeIn);
   });
-
-  window.form = {
-    adForm: adForm
-  };
 })();
