@@ -13,12 +13,12 @@
 
   var openPopup = function (data) {
     closePopup();
-    window.data.map.insertBefore(createCard(data), window.data.map.querySelector('.map__filters-container'));
+    window.actPage.map.insertBefore(createCard(data), window.actPage.map.querySelector('.map__filters-container'));
     window.addEventListener('keydown', onEscPress);
   };
 
   var closePopup = function () {
-    var checkNode = window.data.map.querySelector('.map__card');
+    var checkNode = window.actPage.map.querySelector('.map__card');
     if (checkNode) {
       checkNode.remove();
       window.removeEventListener('keydown', onEscPress);
