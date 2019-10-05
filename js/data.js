@@ -17,10 +17,12 @@
   var mapPinMainHalfWidth = Math.round(mapPinMain.offsetWidth / 2);
   var MAP_PIN_ARROW_HEIGHT = 22;
 
-  var currentMapPinMainCoords = {
+  var startMapPinMainCoords = {
     x: mapPinMain.offsetLeft,
     y: mapPinMain.offsetTop
   };
+
+  var isPageActive = false;
 
   var setAddressInputValue = function (obj, isPageActive) {
     var coordX;
@@ -58,11 +60,14 @@
     });
   };
 
+  //потом объединить в одну функцию toggleActivePage
   var deActivatePage = function () {
-    setAddressInputValue(currentMapPinMainCoords, false);
+    setAddressInputValue(startMapPinMainCoords, false);
     toggleDisableAttribute(fieldsetsfilterForm, true);
     toggleDisableAttribute(selectsfilterForm, true);
     toggleDisableAttribute(fieldsetsAdForm, true);
+    map.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
   };
 
   var activatePage = function (isPageActivated) {
@@ -79,13 +84,16 @@
 
   window.data = {
     map: map,
+    main: main,
     mapPinMain: mapPinMain,
     mapPinMainHalfWidth: mapPinMainHalfWidth,
     MAP_PIN_ARROW_HEIGHT: MAP_PIN_ARROW_HEIGHT,
-    currentMapPinMainCoords: currentMapPinMainCoords,
+    startMapPinMainCoords: startMapPinMainCoords,
     setAddressInputValue: setAddressInputValue,
     adForm: adForm,
+    errorTemplate: errorTemplate,
     activatePage: activatePage,
-    onError: onError
+    deActivatePage,
+    isPageActive: isPageActive
   };
 })();

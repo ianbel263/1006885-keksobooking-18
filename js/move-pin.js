@@ -24,15 +24,14 @@
     }
   };
 
-  var isPageActive = false;
-  var currentCoords = window.data.currentMapPinMainCoords;
+  var currentCoords = window.data.startMapPinMainCoords;
 
   var onMapPinMainMousedown = function (evt) {
     evt.preventDefault();
 
     var isMoved = false;
-    window.data.activatePage(isPageActive);
-    isPageActive = true;
+    window.data.activatePage(window.data.isPageActive);
+    window.data.isPageActive = true;
 
     var startCoords = {
       x: evt.clientX,
@@ -67,14 +66,14 @@
       window.data.mapPinMain.style.left = currentCoords.x + 'px';
       window.data.mapPinMain.style.top = currentCoords.y + 'px';
 
-      window.data.setAddressInputValue(currentCoords, isPageActive);
+      window.data.setAddressInputValue(currentCoords, window.data.isPageActive);
     };
 
     var onMapPinMainMouseup = function (upEvt) {
       upEvt.preventDefault();
 
       if (!isMoved) {
-        window.data.setAddressInputValue(currentCoords, isPageActive);
+        window.data.setAddressInputValue(currentCoords, window.data.isPageActive);
       }
 
       document.removeEventListener('mousemove', onMapPinMainMousemove);
@@ -88,9 +87,9 @@
 
   var onMapPinMainKeydown = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-      window.data.activatePage(isPageActive);
-      isPageActive = true;
-      window.data.setAddressInputValue(currentCoords, isPageActive);
+      window.data.activatePage(window.data.isPageActive);
+      window.data.isPageActive = true;
+      window.data.setAddressInputValue(currentCoords, window.data.isPageActive);
     }
   };
 

@@ -84,7 +84,9 @@
   };
 
   window.card = {
+    ESC_KEYCODE: ESC_KEYCODE,
     createCard: createCard,
-    openPopup: openPopup
+    openPopup: openPopup,
+    closePopup: closePopup
   };
 })();
