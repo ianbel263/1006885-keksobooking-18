@@ -9,8 +9,7 @@
   var selectsfilterForm = filterForm.querySelectorAll('select');
   var fieldsetsfilterForm = filterForm.querySelectorAll('fieldset');
 
-  var adForm = document.querySelector('.ad-form');
-  var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
+  var fieldsetsAdForm = window.form.adForm.querySelectorAll('fieldset');
 
   var loadData = function (arr) {
     window.pin.renderPins(arr);
@@ -18,11 +17,11 @@
     toggleDisableAttribute(selectsfilterForm, false);
   };
 
-  var onLoadError = function (errMessage) {
+  var onError = function (errMessage) {
     var errorBlock = errorTemplate.cloneNode(true);
     errorBlock.querySelector('.error__message').textContent = errMessage;
     errorBlock.querySelector('.error__button').addEventListener('click', function () {
-      window.backend.load(loadData, onLoadError);
+      window.backend.load(loadData, onError);
       if (errorBlock) {
         errorBlock.remove();
       }
@@ -42,9 +41,9 @@
 
   var activatePage = function (isPageActivated) {
     if (!isPageActivated) {
-      window.backend.load(loadData, onLoadError);
+      window.backend.load(loadData, onError);
       map.classList.remove('map--faded');
-      adForm.classList.remove('ad-form--disabled');
+      window.form.adForm.classList.remove('ad-form--disabled');
 
       toggleDisableAttribute(fieldsetsAdForm, false);
     }
@@ -52,7 +51,7 @@
 
   window.actPage = {
     map: map,
-    adForm: adForm,
-    activatePage: activatePage
+    activatePage: activatePage,
+    onError: onError
   };
 })();

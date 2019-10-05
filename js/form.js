@@ -2,12 +2,24 @@
 
 (function () {
 
-  var selectRoomNumber = window.actPage.adForm.querySelector('#room_number');
-  var selectCapacity = window.actPage.adForm.querySelector('#capacity');
-  var selectType = window.actPage.adForm.querySelector('#type');
-  var inputPrice = window.actPage.adForm.querySelector('#price');
-  var selectTimeIn = window.actPage.adForm.querySelector('#timein');
-  var selectTimeOut = window.actPage.adForm.querySelector('#timeout');
+  var adForm = document.querySelector('.ad-form');
+  var selectRoomNumber = adForm.querySelector('#room_number');
+  var selectCapacity = adForm.querySelector('#capacity');
+  var selectType = adForm.querySelector('#type');
+  var inputPrice = adForm.querySelector('#price');
+  var selectTimeIn = adForm.querySelector('#timein');
+  var selectTimeOut = adForm.querySelector('#timeout');
+  var inputAddress = adForm.querySelector('input[name=address]');
+
+  var mapPinMain = document.querySelector('.map__pin--main');
+  var mapPinMainHalfWidth = Math.round(mapPinMain.offsetWidth / 2);
+  var MAP_PIN_ARROW_HEIGHT = 22;
+
+  var setAddressInputValue = function (obj) {
+    obj.x = obj.x + mapPinMainHalfWidth;
+    obj.y = obj.y + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT;
+    inputAddress.value = obj.x + ', ' + obj.y;
+  };
 
   var checkCapacityValidity = function () {
     var roomValue = parseInt(selectRoomNumber.value, 10);
@@ -82,4 +94,19 @@
   selectTimeOut.addEventListener('change', function () {
     checkTimeValidity(selectTimeOut, selectTimeIn);
   });
+
+  adForm.addEventListener('submit', function(evt) {
+    evt.preventDefault();
+    // window.backend.save(new FormData(window.actPage.adForm), function () {
+
+    // }, window.actPage.onError);
+  });
+
+  window.form = {
+    adForm: adForm,
+    mapPinMain: mapPinMain,
+    mapPinMainHalfWidth: mapPinMainHalfWidth,
+    MAP_PIN_ARROW_HEIGHT: MAP_PIN_ARROW_HEIGHT,
+    setAddressInputValue: setAddressInputValue
+  };
 })();
