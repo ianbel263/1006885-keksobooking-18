@@ -2,35 +2,13 @@
 
 (function () {
 
-  var adForm = document.querySelector('.ad-form');
+  var adForm = window.data.adForm;
   var selectRoomNumber = adForm.querySelector('#room_number');
   var selectCapacity = adForm.querySelector('#capacity');
   var selectType = adForm.querySelector('#type');
   var inputPrice = adForm.querySelector('#price');
   var selectTimeIn = adForm.querySelector('#timein');
   var selectTimeOut = adForm.querySelector('#timeout');
-  var inputAddress = adForm.querySelector('input[name=address]');
-
-  var mapPinMain = document.querySelector('.map__pin--main');
-  var mapPinMainHalfWidth = Math.round(mapPinMain.offsetWidth / 2);
-  var MAP_PIN_ARROW_HEIGHT = 22;
-
-  var currentMapPinMainCoords = {
-    x: mapPinMain.offsetLeft,
-    y: mapPinMain.offsetTop
-  };
-
-  var setAddressInputValue = function (obj, isPageActive) {
-    var coordX;
-    var coordY;
-    if (isPageActive) {
-      coordY = obj.y + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT;
-    } else {
-      coordY = obj.y + Math.round(mapPinMain.offsetHeight / 2);
-    }
-    coordX = obj.x + mapPinMainHalfWidth;
-    inputAddress.value = coordX + ', ' + coordY;
-  };
 
   var checkCapacityValidity = function () {
     var roomValue = parseInt(selectRoomNumber.value, 10);
@@ -85,6 +63,11 @@
     }
   };
 
+  var onSaveSuccess = function () {
+    // adForm.reset();
+
+  };
+
   checkCapacityValidity();
   selectCapacity.addEventListener('change', function () {
     checkCapacityValidity();
@@ -108,17 +91,6 @@
 
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    // window.backend.save(new FormData(window.actPage.adForm), function () {
-
-    // }, window.actPage.onError);
+    window.backend.save(new FormData(adForm), onSaveSuccess); //, window.actPage.onError); // проверить фунцкию ошибки
   });
-
-  window.form = {
-    adForm: adForm,
-    mapPinMain: mapPinMain,
-    mapPinMainHalfWidth: mapPinMainHalfWidth,
-    MAP_PIN_ARROW_HEIGHT: MAP_PIN_ARROW_HEIGHT,
-    currentMapPinMainCoords: currentMapPinMainCoords,
-    setAddressInputValue: setAddressInputValue
-  };
 })();
