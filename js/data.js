@@ -24,10 +24,10 @@
 
   var isPageActive = false;
 
-  var setAddressInputValue = function (obj, isPageActive) {
+  var setAddressInputValue = function (obj, isActive) {
     var coordX;
     var coordY;
-    if (isPageActive) {
+    if (isActive) {
       coordY = obj.y + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT;
     } else {
       coordY = obj.y + Math.round(mapPinMain.offsetHeight / 2);
@@ -60,7 +60,7 @@
     });
   };
 
-  //потом объединить в одну функцию toggleActivePage
+  // потом объединить в одну функцию toggleActivePage
   var deActivatePage = function () {
     setAddressInputValue(startMapPinMainCoords, false);
     toggleDisableAttribute(fieldsetsfilterForm, true);
@@ -93,7 +93,7 @@
     adForm: adForm,
     errorTemplate: errorTemplate,
     activatePage: activatePage,
-    deActivatePage,
+    deActivatePage: deActivatePage,
     isPageActive: isPageActive
   };
 })();
