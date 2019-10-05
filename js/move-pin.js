@@ -25,10 +25,7 @@
   };
 
   var isPageActive = false;
-  var currentCoords = {
-    x: window.form.mapPinMain.offsetLeft,
-    y: window.form.mapPinMain.offsetTop
-  };
+  var currentCoords = window.form.currentMapPinMainCoords;
 
   var onMapPinMainMousedown = function (evt) {
     evt.preventDefault();
@@ -70,14 +67,14 @@
       window.form.mapPinMain.style.left = currentCoords.x + 'px';
       window.form.mapPinMain.style.top = currentCoords.y + 'px';
 
-      window.form.setAddressInputValue(currentCoords);
+      window.form.setAddressInputValue(currentCoords, isPageActive);
     };
 
     var onMapPinMainMouseup = function (upEvt) {
       upEvt.preventDefault();
 
       if (!isMoved) {
-        window.form.setAddressInputValue(currentCoords);
+        window.form.setAddressInputValue(currentCoords, isPageActive);
       }
 
       document.removeEventListener('mousemove', onMapPinMainMousemove);
@@ -93,7 +90,7 @@
     if (evt.keyCode === ENTER_KEYCODE) {
       window.actPage.activatePage(isPageActive);
       isPageActive = true;
-      window.form.setAddressInputValue(currentCoords);
+      window.form.setAddressInputValue(currentCoords, isPageActive);
     }
   };
 

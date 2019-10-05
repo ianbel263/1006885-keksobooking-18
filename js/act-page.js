@@ -35,6 +35,7 @@
     });
   };
 
+  window.form.setAddressInputValue(window.form.currentMapPinMainCoords, false);
   toggleDisableAttribute(fieldsetsfilterForm, true);
   toggleDisableAttribute(selectsfilterForm, true);
   toggleDisableAttribute(fieldsetsAdForm, true);
