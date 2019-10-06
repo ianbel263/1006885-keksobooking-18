@@ -88,14 +88,8 @@
   var onSaveSuccess = function () {
     adForm.reset();
     window.data.deActivatePage();
-    window.data.mapPinMain.style.left = window.data.startMapPinMainCoords.x + 'px';
-    window.data.mapPinMain.style.top = window.data.startMapPinMainCoords.y + 'px';
     window.data.isPageActive = false;
-    window.card.closePopup();
-    var allPins = window.data.map.querySelectorAll('.map__pin + :not(.map__pin--main)');
-    allPins.forEach(function (el) {
-      el.remove();
-    });
+
     openSuccess();
   };
 
@@ -149,5 +143,10 @@
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.save(new FormData(adForm), onSaveSuccess, onSaveError);
+  });
+
+  adForm.addEventListener('reset', function () {
+    window.data.deActivatePage();
+    window.data.isPageActive = false;
   });
 })();

@@ -5,7 +5,7 @@
   var ADDRESS_COORDS_LIMIT = {
     x: {
       min: 0,
-      max: window.data.map.offsetWidth
+      max: window.card.map.offsetWidth
     },
     y: {
       min: 130,

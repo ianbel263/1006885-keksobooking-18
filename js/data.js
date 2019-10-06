@@ -6,7 +6,6 @@
   var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
 
   var main = document.querySelector('main');
-  var map = document.querySelector('.map');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
   var filterForm = document.querySelector('.map__filters');
@@ -56,20 +55,26 @@
     });
   };
 
-  // потом объединить в одну функцию toggleActivePage
   var deActivatePage = function () {
+    mapPinMain.style.left = startMapPinMainCoords.x + 'px';
+    mapPinMain.style.top = startMapPinMainCoords.y + 'px';
+    window.card.closePopup();
+    var allPins = window.card.map.querySelectorAll('.map__pin + :not(.map__pin--main)');
+    allPins.forEach(function (el) {
+      el.remove();
+    });
     setAddressInputValue(startMapPinMainCoords, false);
     toggleDisableAttribute(fieldsetsfilterForm, true);
     toggleDisableAttribute(selectsfilterForm, true);
     toggleDisableAttribute(fieldsetsAdForm, true);
-    map.classList.add('map--faded');
+    window.card.map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
   };
 
   var activatePage = function (isPageActivated) {
     if (!isPageActivated) {
       window.backend.load(loadData, onError);
-      map.classList.remove('map--faded');
+      window.card.map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
 
       toggleDisableAttribute(fieldsetsAdForm, false);
@@ -79,7 +84,6 @@
   deActivatePage();
 
   window.data = {
-    map: map,
     main: main,
     mapPinMain: mapPinMain,
     mapPinMainHalfWidth: mapPinMainHalfWidth,

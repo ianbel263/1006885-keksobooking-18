@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var mapPinDiv = window.data.map.querySelector('.map__pins');
+  var mapPinDiv = window.card.map.querySelector('.map__pins');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   var renderPin = function (data) {

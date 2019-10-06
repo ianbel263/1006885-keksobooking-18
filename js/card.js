@@ -3,18 +3,19 @@
 (function () {
   var ESC_KEYCODE = 27;
   var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
+  var map = document.querySelector('.map');
 
   var openPopup = function (data) {
     closePopup();
-    window.data.map.insertBefore(createCard(data), window.data.map.querySelector('.map__filters-container'));
-    window.addEventListener('keydown', onPopupEscPress);
+    map.insertBefore(createCard(data), map.querySelector('.map__filters-container'));
+    document.addEventListener('keydown', onPopupEscPress);
   };
 
   var closePopup = function () {
-    var checkNode = window.data.map.querySelector('.map__card');
+    var checkNode = map.querySelector('.map__card');
     if (checkNode) {
       checkNode.remove();
-      window.removeEventListener('keydown', onPopupEscPress);
+      document.removeEventListener('keydown', onPopupEscPress);
     }
   };
 
@@ -85,6 +86,7 @@
   };
 
   window.card = {
+    map: map,
     createCard: createCard,
     openPopup: openPopup,
     closePopup: closePopup,
