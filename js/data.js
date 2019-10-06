@@ -27,12 +27,8 @@
   var setAddressInputValue = function (obj, isActive) {
     var coordX;
     var coordY;
-    if (isActive) {
-      coordY = obj.y + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT;
-    } else {
-      coordY = obj.y + Math.round(mapPinMain.offsetHeight / 2);
-    }
     coordX = obj.x + mapPinMainHalfWidth;
+    coordY = isActive ? obj.y + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT : obj.y + Math.round(mapPinMain.offsetHeight / 2);
     inputAddress.value = coordX + ', ' + coordY;
   };
 
