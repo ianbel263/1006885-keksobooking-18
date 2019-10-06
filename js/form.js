@@ -65,16 +65,6 @@
     }
   };
 
-  var onSuccessClick = function () {
-    closeSuccess();
-  };
-
-  var onSuccessEscPress = function (evt) {
-    if (evt.keyCode === window.card.ESC_KEYCODE) {
-      closeSuccess();
-    }
-  };
-
   var openSuccess = function () {
     document.addEventListener('click', onSuccessClick);
     document.addEventListener('keydown', onSuccessEscPress);
@@ -88,6 +78,12 @@
       document.removeEventListener('keydown', onSuccessEscPress);
     }
   };
+
+  var onSuccessClick = function () {
+    closeSuccess();
+  };
+
+  var onSuccessEscPress = window.card.onEscPress.bind(null, closeSuccess);
 
   var onSaveSuccess = function () {
     adForm.reset();
@@ -103,14 +99,15 @@
     openSuccess();
   };
 
-  var onSaveErrorEscPress = function (evt) {
-    if (evt.keyCode === window.card.ESC_KEYCODE) {
+  var onSaveError = function (errMessage) {
+    var errorBlock = window.data.errorTemplate.cloneNode(true);
+    errorBlock.querySelector('.error__message').textContent = errMessage;
+    errorBlock.querySelector('.error__button').addEventListener('click', function () {
       closeSaveError();
-    }
-  };
-
-  var onSaveErrorClick = function () {
-    closeSaveError();
+    });
+    document.addEventListener('click', onSaveErrorClick);
+    document.addEventListener('keydown', onSaveErrorEscPress);
+    window.data.main.appendChild(errorBlock);
   };
 
   var closeSaveError = function () {
@@ -122,16 +119,11 @@
     document.removeEventListener('keydown', onSaveErrorEscPress);
   };
 
-  var onSaveError = function (errMessage) {
-    var errorBlock = window.data.errorTemplate.cloneNode(true);
-    errorBlock.querySelector('.error__message').textContent = errMessage;
-    errorBlock.querySelector('.error__button').addEventListener('click', function () {
-      closeSaveError();
-    });
-    document.addEventListener('click', onSaveErrorClick);
-    document.addEventListener('keydown', onSaveErrorEscPress);
-    window.data.main.appendChild(errorBlock);
+  var onSaveErrorClick = function () {
+    closeSaveError();
   };
+
+  var onSaveErrorEscPress = window.card.onEscPress.bind(null, closeSaveError);
 
   checkCapacityValidity();
   selectCapacity.addEventListener('change', function () {
