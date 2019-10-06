@@ -19,9 +19,6 @@
   };
 
   var onEscPress = function (close, evt) {
-    console.log("evt", evt);
-    console.log("close", close);
-
     if (evt.keyCode === ESC_KEYCODE) {
       close();
     }
