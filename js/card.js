@@ -2,28 +2,30 @@
 
 (function () {
   var ESC_KEYCODE = 27;
-
   var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-
-  var onEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closePopup();
-    }
-  };
+  var map = document.querySelector('.map');
 
   var openPopup = function (data) {
     closePopup();
-    window.data.map.insertBefore(createCard(data), window.data.map.querySelector('.map__filters-container'));
-    window.addEventListener('keydown', onEscPress);
+    map.insertBefore(createCard(data), map.querySelector('.map__filters-container'));
+    document.addEventListener('keydown', onPopupEscPress);
   };
 
   var closePopup = function () {
-    var checkNode = window.data.map.querySelector('.map__card');
+    var checkNode = map.querySelector('.map__card');
     if (checkNode) {
       checkNode.remove();
-      window.removeEventListener('keydown', onEscPress);
+      document.removeEventListener('keydown', onPopupEscPress);
     }
   };
+
+  var onEscPress = function (close, evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      close();
+    }
+  };
+
+  var onPopupEscPress = onEscPress.bind(null, closePopup);
 
   var createCard = function (data) {
     var cardElement = cardTemplate.cloneNode(true);
@@ -84,9 +86,10 @@
   };
 
   window.card = {
-    ESC_KEYCODE: ESC_KEYCODE,
+    map: map,
     createCard: createCard,
     openPopup: openPopup,
-    closePopup: closePopup
+    closePopup: closePopup,
+    onEscPress: onEscPress
   };
 })();

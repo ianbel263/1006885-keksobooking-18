@@ -65,16 +65,6 @@
     }
   };
 
-  var onSuccessClick = function () {
-    closeSuccess();
-  };
-
-  var onSuccessEscPress = function (evt) {
-    if (evt.keyCode === window.card.ESC_KEYCODE) {
-      closeSuccess();
-    }
-  };
-
   var openSuccess = function () {
     document.addEventListener('click', onSuccessClick);
     document.addEventListener('keydown', onSuccessEscPress);
@@ -89,37 +79,18 @@
     }
   };
 
+  var onSuccessClick = function () {
+    closeSuccess();
+  };
+
+  var onSuccessEscPress = window.card.onEscPress.bind(null, closeSuccess);
+
   var onSaveSuccess = function () {
     adForm.reset();
     window.data.deActivatePage();
-    window.data.mapPinMain.style.left = window.data.startMapPinMainCoords.x + 'px';
-    window.data.mapPinMain.style.top = window.data.startMapPinMainCoords.y + 'px';
     window.data.isPageActive = false;
-    window.card.closePopup();
-    var allPins = window.data.map.querySelectorAll('.map__pin + :not(.map__pin--main)');
-    allPins.forEach(function (el) {
-      el.remove();
-    });
+
     openSuccess();
-  };
-
-  var onSaveErrorEscPress = function (evt) {
-    if (evt.keyCode === window.card.ESC_KEYCODE) {
-      closeSaveError();
-    }
-  };
-
-  var onSaveErrorClick = function () {
-    closeSaveError();
-  };
-
-  var closeSaveError = function () {
-    var checkNode = window.data.main.querySelector('.error');
-    if (checkNode) {
-      checkNode.remove();
-    }
-    document.removeEventListener('click', onSaveErrorClick);
-    document.removeEventListener('keydown', onSaveErrorEscPress);
   };
 
   var onSaveError = function (errMessage) {
@@ -132,6 +103,21 @@
     document.addEventListener('keydown', onSaveErrorEscPress);
     window.data.main.appendChild(errorBlock);
   };
+
+  var closeSaveError = function () {
+    var checkNode = window.data.main.querySelector('.error');
+    if (checkNode) {
+      checkNode.remove();
+    }
+    document.removeEventListener('click', onSaveErrorClick);
+    document.removeEventListener('keydown', onSaveErrorEscPress);
+  };
+
+  var onSaveErrorClick = function () {
+    closeSaveError();
+  };
+
+  var onSaveErrorEscPress = window.card.onEscPress.bind(null, closeSaveError);
 
   checkCapacityValidity();
   selectCapacity.addEventListener('change', function () {
@@ -157,5 +143,10 @@
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.save(new FormData(adForm), onSaveSuccess, onSaveError);
+  });
+
+  adForm.addEventListener('reset', function () {
+    window.data.deActivatePage();
+    window.data.isPageActive = false;
   });
 })();
