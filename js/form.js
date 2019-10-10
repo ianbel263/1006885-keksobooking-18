@@ -12,6 +12,19 @@
 
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
+  var typeToPrice = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
+  };
+
+  var timeToTime = {
+    '12:00': '12:00',
+    '13:00': '13:00',
+    '14:00': '14:00'
+  }
+
   var checkCapacityValidity = function () {
     var roomValue = parseInt(selectRoomNumber.value, 10);
     var capacityValue = parseInt(selectCapacity.value, 10);
@@ -31,38 +44,42 @@
   };
 
   var checkPriceValidity = function () {
-    switch (selectType.value) {
-      case 'flat':
-        inputPrice.min = 1000;
-        inputPrice.placeholder = '1000';
-        break;
-      case 'bungalo':
-        inputPrice.min = 0;
-        inputPrice.placeholder = '0';
-        break;
-      case 'house':
-        inputPrice.min = 5000;
-        inputPrice.placeholder = '5000';
-        break;
-      case 'palace':
-        inputPrice.min = 10000;
-        inputPrice.placeholder = '10000';
-        break;
-    }
+    inputPrice.min = typeToPrice[selectType.value];
+    inputPrice.placeholder = typeToPrice[selectType.value];
+    // switch (selectType.value) {
+    //   case 'flat':
+    //     inputPrice.min = 1000;
+    //     inputPrice.placeholder = '1000';
+    //     break;
+    //   case 'bungalo':
+    //     inputPrice.min = 0;
+    //     inputPrice.placeholder = '0';
+    //     break;
+    //   case 'house':
+    //     inputPrice.min = 5000;
+    //     inputPrice.placeholder = '5000';
+    //     break;
+    //   case 'palace':
+    //     inputPrice.min = 10000;
+    //     inputPrice.placeholder = '10000';
+    //     break;
+    // }
   };
 
   var checkTimeValidity = function (time1, time2) {
-    switch (time1.value) {
-      case '12:00':
-        time2.value = '12:00';
-        break;
-      case '13:00':
-        time2.value = '13:00';
-        break;
-      case '14:00':
-        time2.value = '14:00';
-        break;
-    }
+    time2.value = timeToTime[time1.value];
+
+    // switch (time1.value) {
+    //   case '12:00':
+    //     time2.value = '12:00';
+    //     break;
+    //   case '13:00':
+    //     time2.value = '13:00';
+    //     break;
+    //   case '14:00':
+    //     time2.value = '14:00';
+    //     break;
+    // }
   };
 
   var openSuccess = function () {
