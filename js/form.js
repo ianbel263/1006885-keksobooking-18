@@ -12,6 +12,19 @@
 
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
+  var typeToPrice = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
+  };
+
+  var timeToTime = {
+    '12:00': '12:00',
+    '13:00': '13:00',
+    '14:00': '14:00'
+  };
+
   var checkCapacityValidity = function () {
     var roomValue = parseInt(selectRoomNumber.value, 10);
     var capacityValue = parseInt(selectCapacity.value, 10);
@@ -31,48 +44,12 @@
   };
 
   var checkPriceValidity = function () {
-    switch (selectType.value) {
-      case 'flat':
-        inputPrice.min = 1000;
-        inputPrice.placeholder = '1000';
-        break;
-      case 'bungalo':
-        inputPrice.min = 0;
-        inputPrice.placeholder = '0';
-        break;
-      case 'house':
-        inputPrice.min = 5000;
-        inputPrice.placeholder = '5000';
-        break;
-      case 'palace':
-        inputPrice.min = 10000;
-        inputPrice.placeholder = '10000';
-        break;
-    }
+    inputPrice.min = typeToPrice[selectType.value];
+    inputPrice.placeholder = typeToPrice[selectType.value];
   };
 
   var checkTimeValidity = function (time1, time2) {
-    switch (time1.value) {
-      case '12:00':
-        time2.value = '12:00';
-        break;
-      case '13:00':
-        time2.value = '13:00';
-        break;
-      case '14:00':
-        time2.value = '14:00';
-        break;
-    }
-  };
-
-  var onSuccessClick = function () {
-    closeSuccess();
-  };
-
-  var onSuccessEscPress = function (evt) {
-    if (evt.keyCode === window.card.ESC_KEYCODE) {
-      closeSuccess();
-    }
+    time2.value = timeToTime[time1.value];
   };
 
   var openSuccess = function () {
@@ -89,37 +66,18 @@
     }
   };
 
+  var onSuccessClick = function () {
+    closeSuccess();
+  };
+
+  var onSuccessEscPress = window.card.onEscPress.bind(null, closeSuccess);
+
   var onSaveSuccess = function () {
     adForm.reset();
     window.data.deActivatePage();
-    window.data.mapPinMain.style.left = window.data.startMapPinMainCoords.x + 'px';
-    window.data.mapPinMain.style.top = window.data.startMapPinMainCoords.y + 'px';
     window.data.isPageActive = false;
-    window.card.closePopup();
-    var allPins = window.data.map.querySelectorAll('.map__pin + :not(.map__pin--main)');
-    allPins.forEach(function (el) {
-      el.remove();
-    });
+
     openSuccess();
-  };
-
-  var onSaveErrorEscPress = function (evt) {
-    if (evt.keyCode === window.card.ESC_KEYCODE) {
-      closeSaveError();
-    }
-  };
-
-  var onSaveErrorClick = function () {
-    closeSaveError();
-  };
-
-  var closeSaveError = function () {
-    var checkNode = window.data.main.querySelector('.error');
-    if (checkNode) {
-      checkNode.remove();
-    }
-    document.removeEventListener('click', onSaveErrorClick);
-    document.removeEventListener('keydown', onSaveErrorEscPress);
   };
 
   var onSaveError = function (errMessage) {
@@ -132,6 +90,21 @@
     document.addEventListener('keydown', onSaveErrorEscPress);
     window.data.main.appendChild(errorBlock);
   };
+
+  var closeSaveError = function () {
+    var checkNode = window.data.main.querySelector('.error');
+    if (checkNode) {
+      checkNode.remove();
+    }
+    document.removeEventListener('click', onSaveErrorClick);
+    document.removeEventListener('keydown', onSaveErrorEscPress);
+  };
+
+  var onSaveErrorClick = function () {
+    closeSaveError();
+  };
+
+  var onSaveErrorEscPress = window.card.onEscPress.bind(null, closeSaveError);
 
   checkCapacityValidity();
   selectCapacity.addEventListener('change', function () {
@@ -157,5 +130,10 @@
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.save(new FormData(adForm), onSaveSuccess, onSaveError);
+  });
+
+  adForm.addEventListener('reset', function () {
+    window.data.deActivatePage();
+    window.data.isPageActive = false;
   });
 })();
