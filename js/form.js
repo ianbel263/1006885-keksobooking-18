@@ -46,40 +46,10 @@
   var checkPriceValidity = function () {
     inputPrice.min = typeToPrice[selectType.value];
     inputPrice.placeholder = typeToPrice[selectType.value];
-    // switch (selectType.value) {
-    //   case 'flat':
-    //     inputPrice.min = 1000;
-    //     inputPrice.placeholder = '1000';
-    //     break;
-    //   case 'bungalo':
-    //     inputPrice.min = 0;
-    //     inputPrice.placeholder = '0';
-    //     break;
-    //   case 'house':
-    //     inputPrice.min = 5000;
-    //     inputPrice.placeholder = '5000';
-    //     break;
-    //   case 'palace':
-    //     inputPrice.min = 10000;
-    //     inputPrice.placeholder = '10000';
-    //     break;
-    // }
   };
 
   var checkTimeValidity = function (time1, time2) {
     time2.value = timeToTime[time1.value];
-
-    // switch (time1.value) {
-    //   case '12:00':
-    //     time2.value = '12:00';
-    //     break;
-    //   case '13:00':
-    //     time2.value = '13:00';
-    //     break;
-    //   case '14:00':
-    //     time2.value = '14:00';
-    //     break;
-    // }
   };
 
   var openSuccess = function () {
