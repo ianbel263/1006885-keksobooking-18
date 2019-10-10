@@ -11,9 +11,8 @@
   };
 
   var filterData = function (data) {
-    console.log("data", data);
     return data.filter(function (el) {
-      return  getType(el);
+      return getType(el);
     }).slice(0, 5);
   };
 
