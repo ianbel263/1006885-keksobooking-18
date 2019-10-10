@@ -82,11 +82,11 @@
     }).slice(0, 5);
   };
 
-  filterForm.addEventListener('change', function () {
+  filterForm.addEventListener('change', window.debounce(function () {
     window.card.closePopup();
     window.pin.deleteAllPins();
     window.pin.renderPins(window.filter.filterData(window.filter.ads));
-  });
+  }));
 
   window.filter = {
     ads: ads,
