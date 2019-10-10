@@ -8,9 +8,8 @@
   var main = document.querySelector('main');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-  var filterForm = document.querySelector('.map__filters');
-  var selectsfilterForm = filterForm.querySelectorAll('select');
-  var fieldsetsfilterForm = filterForm.querySelectorAll('fieldset');
+  var selectsfilterForm = window.filter.filterForm.querySelectorAll('select');
+  var fieldsetsfilterForm = window.filter.filterForm.querySelectorAll('fieldset');
 
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinMainHalfWidth = Math.round(mapPinMain.offsetWidth / 2);
@@ -32,7 +31,8 @@
   };
 
   var loadData = function (arr) {
-    window.pin.renderPins(arr);
+    window.filter.ads = arr;
+    window.filter.filterNumberAds(window.filter.ads);
     toggleDisableAttribute(fieldsetsfilterForm, false);
     toggleDisableAttribute(selectsfilterForm, false);
   };
@@ -59,10 +59,8 @@
     mapPinMain.style.left = startMapPinMainCoords.x + 'px';
     mapPinMain.style.top = startMapPinMainCoords.y + 'px';
     window.card.closePopup();
-    var allPins = window.card.map.querySelectorAll('.map__pin + :not(.map__pin--main)');
-    allPins.forEach(function (el) {
-      el.remove();
-    });
+    window.filter.deleteAllPins();
+    window.filter.filterForm.reset();
     setAddressInputValue(startMapPinMainCoords, false);
     toggleDisableAttribute(fieldsetsfilterForm, true);
     toggleDisableAttribute(selectsfilterForm, true);
