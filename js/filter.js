@@ -23,6 +23,12 @@
   var selectPrice = filterForm.querySelector('#housing-price');
   var selectRooms = filterForm.querySelector('#housing-rooms');
   var selectGuests = filterForm.querySelector('#housing-guests');
+  var wifi = filterForm.querySelector('#filter-wifi');
+  var dishwasher = filterForm.querySelector('#filter-dishwasher');
+  var parking = filterForm.querySelector('#filter-parking');
+  var washer = filterForm.querySelector('#filter-washer');
+  var elevator = filterForm.querySelector('#filter-elevator');
+  var conditioner = filterForm.querySelector('#filter-conditioner');
 
   var getType = function (element) {
     return selectType.value === 'any' ? true : element.offer.type === selectType.value;
@@ -49,16 +55,30 @@
     return selectGuests.value === 'any' ? true : element.offer.guests === roomsGuestsToValue[selectGuests.value];
   };
 
-  // var getFeatures = function (element) {
-  //   // body...
-  // };
+  var checkCheckbox = function (element, checkbox) {
+    if (checkbox.checked) {
+      return element.offer.features.includes(checkbox.value);
+    } else {
+      return true;
+    }
+  };
+
+  var getFeatures = function (element) {
+    return  checkCheckbox(element, wifi) &&
+            checkCheckbox(element, dishwasher) &&
+            checkCheckbox(element, parking) &&
+            checkCheckbox(element, washer) &&
+            checkCheckbox(element, elevator) &&
+            checkCheckbox(element, conditioner);
+  };
 
   var filterData = function (data) {
     return data.filter(function (el) {
       return  getType(el) &&
               getPrice(el) &&
               getRooms(el) &&
-              getGuests(el);
+              getGuests(el) &&
+              getFeatures(el);
     }).slice(0, 5);
   };
 
