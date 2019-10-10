@@ -17,8 +17,8 @@
     window.pin.renderPins(dataArr.slice(0, 5));
   };
 
-  var filterTypeAds = function (dataArr, type) {
-    filterNumberAds(dataArr.filter(function (el) {
+  var filterTypeAds = function (type) {
+    filterNumberAds(window.filter.ads.filter(function (el) {
       if (type === 'any') {
         return el;
       } else {
@@ -30,7 +30,7 @@
   filterForm.addEventListener('change', function () {
     window.card.closePopup();
     deleteAllPins();
-    filterTypeAds(window.filter.ads, selectType.value);
+    filterTypeAds(selectType.value);
   });
 
   window.filter = {
