@@ -82,11 +82,15 @@
     }).slice(0, 5);
   };
 
-  filterForm.addEventListener('change', window.debounce(function () {
+  var onFilterFormChange = window.debounce(function () {
+    window.pin.renderPins(filterData(window.filter.ads));
+  });
+
+  filterForm.addEventListener('change', function () {
     window.card.closePopup();
     window.pin.deleteAllPins();
-    window.pin.renderPins(window.filter.filterData(window.filter.ads));
-  }));
+    onFilterFormChange();
+  });
 
   window.filter = {
     ads: ads,
