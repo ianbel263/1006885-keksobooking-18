@@ -6,37 +6,26 @@
   var filterForm = document.querySelector('.map__filters');
   var selectType = filterForm.querySelector('#housing-type');
 
-  var deleteAllPins = function () {
-    var allPins = window.card.map.querySelectorAll('.map__pin + :not(.map__pin--main)');
-    allPins.forEach(function (el) {
-      el.remove();
-    });
+  var getType = function (element) {
+    return selectType.value === 'any' ? true : element.offer.type === selectType.value;
   };
 
-  var filterNumberAds = function (dataArr) {
-    window.pin.renderPins(dataArr.slice(0, 5));
-  };
-
-  var filterTypeAds = function (type) {
-    filterNumberAds(window.filter.ads.filter(function (el) {
-      if (type === 'any') {
-        return el;
-      } else {
-        return el.offer.type === type;
-      }
-    }));
+  var filterData = function (data) {
+    console.log("data", data);
+    return data.filter(function (el) {
+      return  getType(el);
+    }).slice(0, 5);
   };
 
   filterForm.addEventListener('change', function () {
     window.card.closePopup();
-    deleteAllPins();
-    filterTypeAds(selectType.value);
+    window.pin.deleteAllPins();
+    window.pin.renderPins(window.filter.filterData(window.filter.ads));
   });
 
   window.filter = {
     ads: ads,
     filterForm: filterForm,
-    deleteAllPins: deleteAllPins,
-    filterNumberAds: filterNumberAds
+    filterData: filterData
   };
 })();

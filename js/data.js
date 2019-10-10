@@ -32,7 +32,7 @@
 
   var loadData = function (arr) {
     window.filter.ads = arr;
-    window.filter.filterNumberAds(window.filter.ads);
+    window.pin.renderPins(window.filter.filterData(window.filter.ads));
     toggleDisableAttribute(fieldsetsfilterForm, false);
     toggleDisableAttribute(selectsfilterForm, false);
   };
@@ -59,7 +59,7 @@
     mapPinMain.style.left = startMapPinMainCoords.x + 'px';
     mapPinMain.style.top = startMapPinMainCoords.y + 'px';
     window.card.closePopup();
-    window.filter.deleteAllPins();
+    window.pin.deleteAllPins();
     window.filter.filterForm.reset();
     setAddressInputValue(startMapPinMainCoords, false);
     toggleDisableAttribute(fieldsetsfilterForm, true);

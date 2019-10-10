@@ -27,7 +27,15 @@
     mapPinDiv.appendChild(fragment);
   };
 
+  var deleteAllPins = function () {
+    var allPins = window.card.map.querySelectorAll('.map__pin + :not(.map__pin--main)');
+    allPins.forEach(function (el) {
+      el.remove();
+    });
+  };
+
   window.pin = {
-    renderPins: renderPins
+    renderPins: renderPins,
+    deleteAllPins: deleteAllPins
   };
 })();
