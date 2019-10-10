@@ -64,7 +64,7 @@
   };
 
   var getFeatures = function (element) {
-    return  checkCheckbox(element, wifi) &&
+    return checkCheckbox(element, wifi) &&
             checkCheckbox(element, dishwasher) &&
             checkCheckbox(element, parking) &&
             checkCheckbox(element, washer) &&
@@ -74,7 +74,7 @@
 
   var filterData = function (data) {
     return data.filter(function (el) {
-      return  getType(el) &&
+      return getType(el) &&
               getPrice(el) &&
               getRooms(el) &&
               getGuests(el) &&
