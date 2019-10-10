@@ -4,7 +4,7 @@
   var Url = {
     LOAD: 'https://js.dump.academy/keksobooking/data',
     SAVE: 'https://js.dump.academy/keksobooking'
-  }
+  };
 
   var SUCCESS_CODE = 200;
   var TIMEOUT = 10000;

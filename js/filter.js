@@ -23,7 +23,7 @@
     }));
   };
 
-  filterForm.addEventListener('change', function() {
+  filterForm.addEventListener('change', function () {
     window.card.closePopup();
     deleteAllPins();
     filterTypeAds(window.filter.ads, selectType.value);
@@ -34,5 +34,5 @@
     filterForm: filterForm,
     deleteAllPins: deleteAllPins,
     filterNumberAds: filterNumberAds
-  }
+  };
 })();
