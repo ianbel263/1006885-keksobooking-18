@@ -19,7 +19,11 @@
 
   var filterTypeAds = function (dataArr, type) {
     filterNumberAds(dataArr.filter(function (el) {
-      return el.offer.type === type;
+      if (type === 'any') {
+        return el;
+      } else {
+        return el.offer.type === type;
+      }
     }));
   };
 
