@@ -16,12 +16,7 @@
   var selectPrice = filterForm.querySelector('#housing-price');
   var selectRooms = filterForm.querySelector('#housing-rooms');
   var selectGuests = filterForm.querySelector('#housing-guests');
-  var wifi = filterForm.querySelector('#filter-wifi');
-  var dishwasher = filterForm.querySelector('#filter-dishwasher');
-  var parking = filterForm.querySelector('#filter-parking');
-  var washer = filterForm.querySelector('#filter-washer');
-  var elevator = filterForm.querySelector('#filter-elevator');
-  var conditioner = filterForm.querySelector('#filter-conditioner');
+  var features = filterForm.querySelectorAll('input[type=checkbox]');
 
   var getType = function (element) {
     return selectType.value === 'any' ? true : element.offer.type === selectType.value;
@@ -40,29 +35,33 @@
     }
   };
 
-  var getNumber = function (element, select, loadedValue) {
-    return select.value === 'any' ? true : loadedValue === parseInt(select.value, 10);
+  var getRooms = function (element) {
+    return selectRooms.value === 'any' ? true : element.offer.rooms === parseInt(selectRooms.value, 10);
   };
 
-  var checkCheckbox = function (element, checkbox) {
-    return checkbox.checked ? element.offer.features.includes(checkbox.value) : true;
+  var getGuests = function (element) {
+    return selectGuests.value === 'any' ? true : element.offer.guests === parseInt(selectGuests.value, 10);
   };
 
   var getFeatures = function (element) {
-    return checkCheckbox(element, wifi) &&
-            checkCheckbox(element, dishwasher) &&
-            checkCheckbox(element, parking) &&
-            checkCheckbox(element, washer) &&
-            checkCheckbox(element, elevator) &&
-            checkCheckbox(element, conditioner);
+    return Array.from(features)
+            .filter(function (el) {
+              return el.checked;
+            })
+            .map(function (it) {
+              return it.value;
+            })
+            .every(function (feature) {
+              return element.offer.features.includes(feature);
+            });
   };
 
   var filterData = function (data) {
     return data.filter(function (el) {
       return getType(el) &&
               getPrice(el) &&
-              getNumber(el, selectRooms, el.offer.rooms) &&
-              getNumber(el, selectGuests, el.offer.guests) &&
+              getRooms(el) &&
+              getGuests(el) &&
               getFeatures(el);
     }).slice(0, 5);
   };
