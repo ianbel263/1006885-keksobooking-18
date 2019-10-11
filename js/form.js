@@ -19,12 +19,6 @@
     'palace': 10000
   };
 
-  var timeToTime = {
-    '12:00': '12:00',
-    '13:00': '13:00',
-    '14:00': '14:00'
-  };
-
   var checkCapacityValidity = function () {
     var roomValue = parseInt(selectRoomNumber.value, 10);
     var capacityValue = parseInt(selectCapacity.value, 10);
@@ -49,7 +43,7 @@
   };
 
   var checkTimeValidity = function (time1, time2) {
-    time2.value = timeToTime[time1.value];
+    time2.value = time1.value;
   };
 
   var openSuccess = function () {
