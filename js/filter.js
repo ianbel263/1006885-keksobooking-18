@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var MAX_PINS;
+
   var ads = [];
 
   var Price = {
@@ -63,7 +65,7 @@
               getRooms(el) &&
               getGuests(el) &&
               getFeatures(el);
-    }).slice(0, 5);
+    }).slice(0, MAX_PINS);
   };
 
   var onFilterFormChange = window.debounce(function () {
