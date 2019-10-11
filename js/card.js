@@ -53,22 +53,22 @@
 
     featuresList.innerHTML = '';
     if (data.offer.features.length) {
-      for (var i = 0; i < data.offer.features.length; i++) {
+      data.offer.features.forEach(function (it) {
         var newItem = document.createElement('li');
-        newItem.className = 'popup__feature popup__feature--' + data.offer.features[i];
+        newItem.className = 'popup__feature popup__feature--' + it;
         featuresList.appendChild(newItem);
-      }
+      });
     } else {
       featuresList.classList.add('hidden');
     }
 
     if (data.offer.photos.length) {
       cardElement.querySelector('.popup__photo').src = data.offer.photos[0];
-      for (i = 1; i < data.offer.photos.length; i++) {
+      data.offer.photos.slice(1).forEach(function (it) {
         var newImg = cardElement.querySelector('.popup__photo').cloneNode(true);
-        newImg.src = data.offer.photos[i];
+        newImg.src = it;
         cardElement.querySelector('.popup__photos').appendChild(newImg);
-      }
+      });
     } else {
       cardElement.querySelector('.popup__photos').innerHTML = '';
       cardElement.querySelector('.popup__photos').classList.add('hidden');

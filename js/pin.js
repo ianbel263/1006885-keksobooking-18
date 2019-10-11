@@ -19,12 +19,18 @@
 
   var renderPins = function (arr) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i].offer) {
-        fragment.appendChild(renderPin(arr[i]));
+    arr.forEach(function (el) {
+      if (el.offer) {
+        fragment.appendChild(renderPin(el));
       }
-    }
-    mapPinDiv.appendChild(fragment);
+      mapPinDiv.appendChild(fragment);
+    });
+    // for (var i = 0; i < arr.length; i++) {
+    //   if (arr[i].offer) {
+    //     fragment.appendChild(renderPin(arr[i]));
+    //   }
+    // }
+    // mapPinDiv.appendChild(fragment);
   };
 
   var deleteAllPins = function () {
