@@ -40,12 +40,8 @@
     }
   };
 
-  var getRooms = function (element) {
-    return selectRooms.value === 'any' ? true : element.offer.rooms === parseInt(selectRooms.value, 10);
-  };
-
-  var getGuests = function (element) {
-    return selectGuests.value === 'any' ? true : element.offer.guests === parseInt(selectGuests.value, 10);
+  var getNumber = function (element, select, loadedValue) {
+    return select.value === 'any' ? true : loadedValue === parseInt(select.value, 10);
   };
 
   var checkCheckbox = function (element, checkbox) {
@@ -65,8 +61,8 @@
     return data.filter(function (el) {
       return getType(el) &&
               getPrice(el) &&
-              getRooms(el) &&
-              getGuests(el) &&
+              getNumber(el, selectRooms, el.offer.rooms) &&
+              getNumber(el, selectGuests, el.offer.guests) &&
               getFeatures(el);
     }).slice(0, 5);
   };
