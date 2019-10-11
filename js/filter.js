@@ -11,13 +11,6 @@
     HIGH: 'high'
   };
 
-  var roomsGuestsToValue = {
-    '1': 1,
-    '2': 2,
-    '3': 3,
-    '0': 0
-  };
-
   var filterForm = document.querySelector('.map__filters');
   var selectType = filterForm.querySelector('#housing-type');
   var selectPrice = filterForm.querySelector('#housing-price');
@@ -48,19 +41,15 @@
   };
 
   var getRooms = function (element) {
-    return selectRooms.value === 'any' ? true : element.offer.rooms === roomsGuestsToValue[selectRooms.value];
+    return selectRooms.value === 'any' ? true : element.offer.rooms === parseInt(selectRooms.value, 10);
   };
 
   var getGuests = function (element) {
-    return selectGuests.value === 'any' ? true : element.offer.guests === roomsGuestsToValue[selectGuests.value];
+    return selectGuests.value === 'any' ? true : element.offer.guests === parseInt(selectGuests.value, 10);
   };
 
   var checkCheckbox = function (element, checkbox) {
-    if (checkbox.checked) {
-      return element.offer.features.includes(checkbox.value);
-    } else {
-      return true;
-    }
+    return checkbox.checked ? element.offer.features.includes(checkbox.value) : true;
   };
 
   var getFeatures = function (element) {
