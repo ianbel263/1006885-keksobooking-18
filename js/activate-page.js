@@ -10,11 +10,13 @@
   };
 
   var doPageNonActive = function () {
+    window.movePin.isPageActive = false;
     window.movePin.setDefaultMapPinMainCoords();
     window.card.closePopup();
     window.pin.deleteAllPins();
     window.filter.filterForm.reset();
-    window.movePin.setAddressInputValue(window.movePin.startMapPinMainCoords, false);
+    window.movePin.setAddressInputValue(window.movePin.startMapPinMainCoords, window.movePin.isPageActivated);
+    console.log("window.movePin.startMapPinMainCoords", window.movePin.startMapPinMainCoords);
     toggleDisableAttribute(window.data.fieldsetsFilterForm, true);
     toggleDisableAttribute(window.data.selectsFilterForm, true);
     toggleDisableAttribute(fieldsetsAdForm, true);

@@ -69,7 +69,6 @@
   var onSaveSuccess = function () {
     adForm.reset();
     window.activatePage.doPageNonActive();
-    window.movePin.isPageActive = false;
     openSuccess();
   };
 
@@ -125,8 +124,9 @@
     window.backend.save(new FormData(adForm), onSaveSuccess, onSaveError);
   });
 
-  adForm.addEventListener('reset', function () {
+  adForm.addEventListener('reset', function (evt) {
+    evt.preventDefault();
+    adForm.reset();
     window.activatePage.doPageNonActive();
-    window.movePin.isPageActive = false;
   });
 })();
