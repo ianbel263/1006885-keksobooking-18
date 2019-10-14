@@ -68,7 +68,7 @@
 
   var onSaveSuccess = function () {
     adForm.reset();
-    window.data.deActivatePage();
+    window.activatePage.doPageNonActive();
     window.movePin.isPageActive = false;
     openSuccess();
   };
@@ -126,7 +126,7 @@
   });
 
   adForm.addEventListener('reset', function () {
-    window.data.deActivatePage();
+    window.activatePage.doPageNonActive();
     window.movePin.isPageActive = false;
   });
 })();

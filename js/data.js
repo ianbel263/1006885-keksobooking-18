@@ -1,19 +1,17 @@
 'use strict';
 
 (function () {
-  var fieldsetsAdForm = window.movePin.adForm.querySelectorAll('fieldset');
-
   var main = document.querySelector('main');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-  var selectsfilterForm = window.filter.filterForm.querySelectorAll('select');
-  var fieldsetsfilterForm = window.filter.filterForm.querySelectorAll('fieldset');
+  var fieldsetsFilterForm = window.filter.filterForm.querySelectorAll('fieldset');
+  var selectsFilterForm = window.filter.filterForm.querySelectorAll('select');
 
   var loadData = function (arr) {
     window.filter.ads = arr;
     window.pin.renderPins(window.filter.filterData(window.filter.ads));
-    toggleDisableAttribute(fieldsetsfilterForm, false);
-    toggleDisableAttribute(selectsfilterForm, false);
+    window.activatePage.toggleDisableAttribute(fieldsetsFilterForm, false);
+    window.activatePage.toggleDisableAttribute(selectsFilterForm, false);
   };
 
   var onError = function (errMessage) {
@@ -28,41 +26,12 @@
     main.appendChild(errorBlock);
   };
 
-  var toggleDisableAttribute = function (elements, isTrue) {
-    elements.forEach(function (el) {
-      el.disabled = isTrue;
-    });
-  };
-
-  var deActivatePage = function () {
-    window.movePin.setDefaultMapPinMainCoords();
-    window.card.closePopup();
-    window.pin.deleteAllPins();
-    window.filter.filterForm.reset();
-    window.movePin.setAddressInputValue(window.movePin.startMapPinMainCoords, false);
-    toggleDisableAttribute(fieldsetsfilterForm, true);
-    toggleDisableAttribute(selectsfilterForm, true);
-    toggleDisableAttribute(fieldsetsAdForm, true);
-    window.card.map.classList.add('map--faded');
-    window.movePin.adForm.classList.add('ad-form--disabled');
-  };
-
-  var activatePage = function (isPageActivated) {
-    if (!isPageActivated) {
-      window.backend.load(loadData, onError);
-      window.card.map.classList.remove('map--faded');
-      window.movePin.adForm.classList.remove('ad-form--disabled');
-
-      toggleDisableAttribute(fieldsetsAdForm, false);
-    }
-  };
-
-  deActivatePage();
-
   window.data = {
     main: main,
+    loadData: loadData,
+    onError: onError,
     errorTemplate: errorTemplate,
-    activatePage: activatePage,
-    deActivatePage: deActivatePage
+    fieldsetsFilterForm: fieldsetsFilterForm,
+    selectsFilterForm: selectsFilterForm
   };
 })();

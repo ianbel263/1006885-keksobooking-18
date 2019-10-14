@@ -24,21 +24,20 @@
     mapPinMain.style.top = startMapPinMainCoords.y + 'px';
   };
 
-  var isPageActive = false;
-
   var setAddressInputValue = function (obj, isActive) {
     var coordX = obj.x + mapPinMainHalfWidth;
     var coordY = isActive ? obj.y + mapPinMain.offsetHeight + MAP_PIN_ARROW_HEIGHT : obj.y + Math.round(mapPinMain.offsetHeight / 2);
     inputAddress.value = coordX + ', ' + coordY;
   };
 
+  var isPageActive = false;
   var currentCoords = new window.Coordinate(mapPinMain.offsetLeft, mapPinMain.offsetTop, CoordLimit.LEFT, CoordLimit.TOP, CoordLimit.RIGHT, CoordLimit.BOTTOM);
 
   var onMapPinMainMousedown = function (evt) {
     evt.preventDefault();
 
     var isMoved = false;
-    window.data.activatePage(window.movePin.isPageActive);
+    window.activatePage.doPageActive(window.movePin.isPageActive);
     isPageActive = true;
 
     var startCoords = new window.Coordinate(evt.clientX, evt.clientY, CoordLimit.LEFT, CoordLimit.TOP, CoordLimit.RIGHT, CoordLimit.BOTTOM);
@@ -80,7 +79,7 @@
 
   var onMapPinMainKeydown = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-      window.data.activatePage(window.movePin.isPageActive);
+      window.activatePage.doPageActive(window.movePin.isPageActive);
       isPageActive = true;
       setAddressInputValue(currentCoords, isPageActive);
     }
