@@ -11,14 +11,14 @@
     this._maxY = maxY;
   };
 
-  Coordinate.prototype.setX = function(x) {
+  Coordinate.prototype.setX = function (x) {
     if (x >= this._minX &&
         x <= this._maxX) {
       this.x = x;
     }
   };
 
-  Coordinate.prototype.setY = function(y) {
+  Coordinate.prototype.setY = function (y) {
     if (y >= this._minY &&
         y <= this._maxY) {
       this.y = y;

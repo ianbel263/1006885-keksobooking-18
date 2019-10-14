@@ -11,7 +11,7 @@
   var ENTER_KEYCODE = 13;
 
   var CoordLimit = {
-    LEFT: - mapPinMainHalfWidth,
+    LEFT: 0 - mapPinMainHalfWidth,
     TOP: 130 - mapPinMain.offsetHeight - MAP_PIN_ARROW_HEIGHT,
     RIGHT: window.card.map.offsetWidth - mapPinMainHalfWidth,
     BOTTOM: 630 - mapPinMain.offsetHeight - MAP_PIN_ARROW_HEIGHT
