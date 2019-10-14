@@ -90,7 +90,6 @@
 
   window.movePin = {
     adForm: adForm,
-    mapPinMain: mapPinMain,
     startMapPinMainCoords: startMapPinMainCoords,
     setAddressInputValue: setAddressInputValue,
     isPageActive: isPageActive,
