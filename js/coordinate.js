@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var Coordinate = function (x, y, minX, minY, maxX, maxY) {
+  window.Coordinate = function (x, y, minX, minY, maxX, maxY) {
     this.x = x;
     this.y = y;
 
@@ -11,19 +11,17 @@
     this._maxY = maxY;
   };
 
-  Coordinate.prototype.setX = function (x) {
+  window.Coordinate.prototype.setX = function (x) {
     if (x >= this._minX &&
         x <= this._maxX) {
       this.x = x;
     }
   };
 
-  Coordinate.prototype.setY = function (y) {
+  window.Coordinate.prototype.setY = function (y) {
     if (y >= this._minY &&
         y <= this._maxY) {
       this.y = y;
     }
   };
-
-  window.Coordinate = Coordinate;
 })();
