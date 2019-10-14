@@ -9,7 +9,7 @@
 
   var loadData = function (arr) {
     window.filter.ads = arr;
-    window.pin.renderPins(window.filter.filterData(window.filter.ads));
+    window.pin.renderPins(window.filter.filterData(arr));
     window.activatePage.toggleDisableAttribute(fieldsetsFilterForm, false);
     window.activatePage.toggleDisableAttribute(selectsFilterForm, false);
   };
