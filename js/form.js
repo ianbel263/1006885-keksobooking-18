@@ -2,7 +2,7 @@
 
 (function () {
 
-  var adForm = window.data.adForm;
+  var adForm = window.movePin.adForm;
   var selectRoomNumber = adForm.querySelector('#room_number');
   var selectCapacity = adForm.querySelector('#capacity');
   var selectType = adForm.querySelector('#type');
@@ -68,9 +68,8 @@
 
   var onSaveSuccess = function () {
     adForm.reset();
-    window.data.deActivatePage();
-    window.data.isPageActive = false;
-
+    window.activatePage.doPageNonActive();
+    window.movePin.isPageActive = false;
     openSuccess();
   };
 
@@ -127,7 +126,7 @@
   });
 
   adForm.addEventListener('reset', function () {
-    window.data.deActivatePage();
-    window.data.isPageActive = false;
+    window.activatePage.doPageNonActive();
+    window.movePin.isPageActive = false;
   });
 })();
