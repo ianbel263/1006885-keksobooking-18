@@ -72,17 +72,13 @@
     openSuccess();
   };
 
-  var closeSaveError = function () {
+  var onSaveErrorButtonClick = function () {
     var checkNode = window.data.main.querySelector('.error');
     if (checkNode) {
       checkNode.remove();
+      document.removeEventListener('click', onSaveErrorButtonClick);
+      document.removeEventListener('keydown', onSaveErrorEscPress);
     }
-    document.removeEventListener('click', onSaveErrorButtonClick);
-    document.removeEventListener('keydown', onSaveErrorEscPress);
-  };
-
-  var onSaveErrorButtonClick = function () {
-    closeSaveError();
   };
 
   var onSaveErrorEscPress = window.card.onEscPress.bind(null, onSaveErrorButtonClick);
