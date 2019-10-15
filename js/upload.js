@@ -32,7 +32,6 @@
   var photoContainer = document.querySelector('.ad-form__photo-container');
   var photoDiv = document.querySelector('.ad-form__photo');
 
-
   photoFileChooser.addEventListener('change', function () {
     var photo = photoDiv.querySelector('img');
     if (!photo) {
@@ -48,4 +47,9 @@
       photoContainer.appendChild(newPhotoDiv);
     }
   });
+
+  window.upload = {
+    avatarPreview: avatarPreview,
+    photoContainer: photoContainer
+  };
 })();

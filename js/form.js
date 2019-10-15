@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var DEFAULT_AVATAR_SRC = 'img/muffin-grey.svg';
 
   var adForm = window.movePin.adForm;
   var selectRoomNumber = adForm.querySelector('#room_number');
@@ -127,6 +128,12 @@
   adForm.addEventListener('reset', function (evt) {
     evt.preventDefault();
     adForm.reset();
+    window.upload.avatarPreview.src = DEFAULT_AVATAR_SRC;
+    var allUploadedPhotos = window.upload.photoContainer.querySelectorAll('.ad-form__photo');
+    allUploadedPhotos[0].innerHTML = '';
+    Array.from(allUploadedPhotos).slice(1).forEach(function (el) {
+      el.remove();
+    });
     window.activatePage.doPageNonActive();
   });
 })();

@@ -6,12 +6,17 @@
 
   var fieldsetsFilterForm = window.filter.filterForm.querySelectorAll('fieldset');
   var selectsFilterForm = window.filter.filterForm.querySelectorAll('select');
+  var fieldsetsAdForm = window.movePin.adForm.querySelectorAll('fieldset');
+
 
   var loadData = function (arr) {
     window.filter.ads = arr;
     window.pin.renderPins(window.filter.filterData(arr));
     window.activatePage.toggleDisableAttribute(fieldsetsFilterForm, false);
     window.activatePage.toggleDisableAttribute(selectsFilterForm, false);
+    window.card.map.classList.remove('map--faded');
+    window.movePin.adForm.classList.remove('ad-form--disabled');
+    window.activatePage.toggleDisableAttribute(fieldsetsAdForm, false);
   };
 
   var onError = function (errMessage) {
@@ -32,6 +37,7 @@
     onError: onError,
     errorTemplate: errorTemplate,
     fieldsetsFilterForm: fieldsetsFilterForm,
-    selectsFilterForm: selectsFilterForm
+    selectsFilterForm: selectsFilterForm,
+    fieldsetsAdForm: fieldsetsAdForm
   };
 })();

@@ -17,7 +17,9 @@
     BOTTOM: 630 - mapPinMain.offsetHeight - MAP_PIN_ARROW_HEIGHT
   };
 
+  var isPageActive = false;
   var startMapPinMainCoords = new window.Coordinate(mapPinMain.offsetLeft, mapPinMain.offsetTop);
+  var currentCoords = new window.Coordinate(mapPinMain.offsetLeft, mapPinMain.offsetTop, CoordLimit.LEFT, CoordLimit.TOP, CoordLimit.RIGHT, CoordLimit.BOTTOM);
 
   var setDefaultMapPinMainCoords = function () {
     mapPinMain.style.left = startMapPinMainCoords.x + 'px';
@@ -30,15 +32,11 @@
     inputAddress.value = coordX + ', ' + coordY;
   };
 
-  var isPageActive = false;
-  var currentCoords = new window.Coordinate(mapPinMain.offsetLeft, mapPinMain.offsetTop, CoordLimit.LEFT, CoordLimit.TOP, CoordLimit.RIGHT, CoordLimit.BOTTOM);
-
   var onMapPinMainMousedown = function (evt) {
     evt.preventDefault();
 
     var isMoved = false;
     window.activatePage.doPageActive(window.movePin.isPageActive);
-    isPageActive = true;
 
     var startCoords = new window.Coordinate(evt.clientX, evt.clientY, CoordLimit.LEFT, CoordLimit.TOP, CoordLimit.RIGHT, CoordLimit.BOTTOM);
 
@@ -58,14 +56,14 @@
       mapPinMain.style.left = currentCoords.x + 'px';
       mapPinMain.style.top = currentCoords.y + 'px';
 
-      setAddressInputValue(currentCoords, isPageActive);
+      setAddressInputValue(currentCoords, window.movePin.isPageActive);
     };
 
     var onMapPinMainMouseup = function (upEvt) {
       upEvt.preventDefault();
 
       if (!isMoved) {
-        setAddressInputValue(currentCoords, isPageActive);
+        setAddressInputValue(startMapPinMainCoords, window.movePin.isPageActive);
       }
 
       document.removeEventListener('mousemove', onMapPinMainMousemove);
@@ -80,8 +78,7 @@
   var onMapPinMainKeydown = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       window.activatePage.doPageActive(window.movePin.isPageActive);
-      isPageActive = true;
-      setAddressInputValue(currentCoords, isPageActive);
+      setAddressInputValue(startMapPinMainCoords, window.movePin.isPageActive);
     }
   };
 

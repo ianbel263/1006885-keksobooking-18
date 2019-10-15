@@ -7,7 +7,7 @@
   };
 
   var SUCCESS_CODE = 200;
-  var TIMEOUT = 10000;
+  var TIMEOUT = 250;
 
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
