@@ -20,6 +20,15 @@
     'palace': 10000
   };
 
+  var setDefaultFormImages = function () {
+    window.upload.avatarPreview.src = DEFAULT_AVATAR_SRC;
+    var allUploadedPhotos = window.upload.photoContainer.querySelectorAll('.ad-form__photo');
+    allUploadedPhotos[0].innerHTML = '';
+    Array.from(allUploadedPhotos).slice(1).forEach(function (el) {
+      el.remove();
+    });
+  };
+
   var checkCapacityValidity = function () {
     var roomValue = parseInt(selectRoomNumber.value, 10);
     var capacityValue = parseInt(selectCapacity.value, 10);
@@ -69,6 +78,7 @@
 
   var onSaveSuccess = function () {
     window.activatePage.doPageNonActive();
+    setDefaultFormImages();
     openSuccess();
   };
 
@@ -116,12 +126,7 @@
   });
 
   buttonAdFormReset.addEventListener('click', function () {
-    window.upload.avatarPreview.src = DEFAULT_AVATAR_SRC;
-    var allUploadedPhotos = window.upload.photoContainer.querySelectorAll('.ad-form__photo');
-    allUploadedPhotos[0].innerHTML = '';
-    Array.from(allUploadedPhotos).slice(1).forEach(function (el) {
-      el.remove();
-    });
+    setDefaultFormImages();
     window.activatePage.doPageNonActive();
   });
 })();
