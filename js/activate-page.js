@@ -13,6 +13,7 @@
     window.card.closePopup();
     window.pin.deleteAllPins();
     window.filter.filterForm.reset();
+    window.data.adForm.reset();
     toggleDisableAttribute(window.data.fieldsetsFilterForm, true);
     toggleDisableAttribute(window.data.selectsFilterForm, true);
     toggleDisableAttribute(window.data.fieldsetsAdForm, true);

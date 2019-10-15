@@ -9,6 +9,8 @@
   var inputPrice = window.data.adForm.querySelector('#price');
   var selectTimeIn = window.data.adForm.querySelector('#timein');
   var selectTimeOut = window.data.adForm.querySelector('#timeout');
+  var buttonAdFormReset = window.data.adForm.querySelector('button[type=reset]');
+  console.log("buttonAdFormReset", buttonAdFormReset);
 
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
@@ -67,7 +69,6 @@
   var onSuccessEscPress = window.card.onEscPress.bind(null, closeSuccess);
 
   var onSaveSuccess = function () {
-    window.data.adForm.reset();
     window.activatePage.doPageNonActive();
     openSuccess();
   };
@@ -115,7 +116,7 @@
     window.backend.save(new FormData(window.data.adForm), onSaveSuccess, onSaveError);
   });
 
-  window.data.adForm.addEventListener('reset', function () {
+  buttonAdFormReset.addEventListener('click', function () {
     window.upload.avatarPreview.src = DEFAULT_AVATAR_SRC;
     var allUploadedPhotos = window.upload.photoContainer.querySelectorAll('.ad-form__photo');
     allUploadedPhotos[0].innerHTML = '';
