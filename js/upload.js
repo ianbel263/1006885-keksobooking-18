@@ -19,6 +19,7 @@
         reader.readAsDataURL(file);
       }
     }
+    return matches;
   };
 
   var avatarFileChooser = document.querySelector('.ad-form__field input[type=file]');
@@ -30,21 +31,23 @@
 
   var photoFileChooser = document.querySelector('.ad-form__upload input[type=file]');
   var photoContainer = document.querySelector('.ad-form__photo-container');
-  var photoDiv = document.querySelector('.ad-form__photo');
 
   photoFileChooser.addEventListener('change', function () {
+    var photoDiv = photoContainer.querySelector('.ad-form__photo');
     var photo = photoDiv.querySelector('img');
     if (!photo) {
       photo = document.createElement('img');
       photo.style.width = 100 + '%';
       photo.style.height = 100 + '%';
       photo.style['object-fit'] = 'cover';
-      onInputFileChange(photoFileChooser, photo);
-      photoDiv.appendChild(photo);
+      if (onInputFileChange(photoFileChooser, photo)) {
+        photoDiv.appendChild(photo);
+      }
     } else {
       var newPhotoDiv = photoDiv.cloneNode(true);
-      onInputFileChange(photoFileChooser, newPhotoDiv.querySelector('img'));
-      photoContainer.appendChild(newPhotoDiv);
+      if (onInputFileChange(photoFileChooser, newPhotoDiv.querySelector('img'))) {
+        photoContainer.appendChild(newPhotoDiv);
+      }
     }
   });
 

@@ -10,7 +10,6 @@
   var selectTimeIn = window.data.adForm.querySelector('#timein');
   var selectTimeOut = window.data.adForm.querySelector('#timeout');
   var buttonAdFormReset = window.data.adForm.querySelector('button[type=reset]');
-  console.log("buttonAdFormReset", buttonAdFormReset);
 
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
