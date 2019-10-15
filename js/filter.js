@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var MAX_PINS;
+  var MAX_ADS = 5;
 
   var ads = [];
 
@@ -65,7 +65,7 @@
               getRooms(el) &&
               getGuests(el) &&
               getFeatures(el);
-    }).slice(0, MAX_PINS);
+    }).slice(0, MAX_ADS);
   };
 
   var onFilterFormChange = window.debounce(function () {
