@@ -1,14 +1,15 @@
 'use strict';
 
 (function () {
+  var DEFAULT_AVATAR_SRC = 'img/muffin-grey.svg';
 
-  var adForm = window.movePin.adForm;
-  var selectRoomNumber = adForm.querySelector('#room_number');
-  var selectCapacity = adForm.querySelector('#capacity');
-  var selectType = adForm.querySelector('#type');
-  var inputPrice = adForm.querySelector('#price');
-  var selectTimeIn = adForm.querySelector('#timein');
-  var selectTimeOut = adForm.querySelector('#timeout');
+  var selectRoomNumber = window.data.adForm.querySelector('#room_number');
+  var selectCapacity = window.data.adForm.querySelector('#capacity');
+  var selectType = window.data.adForm.querySelector('#type');
+  var inputPrice = window.data.adForm.querySelector('#price');
+  var selectTimeIn = window.data.adForm.querySelector('#timein');
+  var selectTimeOut = window.data.adForm.querySelector('#timeout');
+  var buttonAdFormReset = window.data.adForm.querySelector('button[type=reset]');
 
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
@@ -17,6 +18,15 @@
     'flat': 1000,
     'house': 5000,
     'palace': 10000
+  };
+
+  var setDefaultFormImages = function () {
+    window.upload.avatarPreview.src = DEFAULT_AVATAR_SRC;
+    var allUploadedPhotos = window.upload.photoContainer.querySelectorAll('.ad-form__photo');
+    allUploadedPhotos[0].innerHTML = '';
+    Array.from(allUploadedPhotos).slice(1).forEach(function (el) {
+      el.remove();
+    });
   };
 
   var checkCapacityValidity = function () {
@@ -67,37 +77,27 @@
   var onSuccessEscPress = window.card.onEscPress.bind(null, closeSuccess);
 
   var onSaveSuccess = function () {
-    adForm.reset();
     window.activatePage.doPageNonActive();
-    window.movePin.isPageActive = false;
+    setDefaultFormImages();
     openSuccess();
   };
 
-  var onSaveError = function (errMessage) {
-    var errorBlock = window.data.errorTemplate.cloneNode(true);
-    errorBlock.querySelector('.error__message').textContent = errMessage;
-    errorBlock.querySelector('.error__button').addEventListener('click', function () {
-      closeSaveError();
-    });
-    document.addEventListener('click', onSaveErrorClick);
-    document.addEventListener('keydown', onSaveErrorEscPress);
-    window.data.main.appendChild(errorBlock);
-  };
-
-  var closeSaveError = function () {
+  var onSaveErrorButtonClick = function () {
     var checkNode = window.data.main.querySelector('.error');
     if (checkNode) {
       checkNode.remove();
+      document.removeEventListener('click', onSaveErrorButtonClick);
+      document.removeEventListener('keydown', onSaveErrorEscPress);
     }
-    document.removeEventListener('click', onSaveErrorClick);
-    document.removeEventListener('keydown', onSaveErrorEscPress);
   };
 
-  var onSaveErrorClick = function () {
-    closeSaveError();
-  };
+  var onSaveErrorEscPress = window.card.onEscPress.bind(null, onSaveErrorButtonClick);
 
-  var onSaveErrorEscPress = window.card.onEscPress.bind(null, closeSaveError);
+  var onSaveError = function (errMessage) {
+    window.data.createErrorBlock(errMessage, onSaveErrorButtonClick);
+    document.addEventListener('click', onSaveErrorButtonClick);
+    document.addEventListener('keydown', onSaveErrorEscPress);
+  };
 
   checkCapacityValidity();
   selectCapacity.addEventListener('change', function () {
@@ -120,13 +120,13 @@
     checkTimeValidity(selectTimeOut, selectTimeIn);
   });
 
-  adForm.addEventListener('submit', function (evt) {
+  window.data.adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(adForm), onSaveSuccess, onSaveError);
+    window.backend.save(new FormData(window.data.adForm), onSaveSuccess, onSaveError);
   });
 
-  adForm.addEventListener('reset', function () {
+  buttonAdFormReset.addEventListener('click', function () {
+    setDefaultFormImages();
     window.activatePage.doPageNonActive();
-    window.movePin.isPageActive = false;
   });
 })();
