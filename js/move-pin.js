@@ -4,8 +4,7 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinMainHalfWidth = Math.round(mapPinMain.offsetWidth / 2);
 
-  var adForm = document.querySelector('.ad-form');
-  var inputAddress = adForm.querySelector('input[name=address]');
+  var inputAddress = document.querySelector('input[name=address]');
 
   var MAP_PIN_ARROW_HEIGHT = 22;
   var ENTER_KEYCODE = 13;
@@ -86,7 +85,6 @@
   mapPinMain.addEventListener('keydown', onMapPinMainKeydown);
 
   window.movePin = {
-    adForm: adForm,
     startMapPinMainCoords: startMapPinMainCoords,
     setAddressInputValue: setAddressInputValue,
     isPageActive: isPageActive,

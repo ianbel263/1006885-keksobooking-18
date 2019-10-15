@@ -13,12 +13,12 @@
     window.card.closePopup();
     window.pin.deleteAllPins();
     window.filter.filterForm.reset();
-    window.movePin.setAddressInputValue(window.movePin.startMapPinMainCoords, false);
     toggleDisableAttribute(window.data.fieldsetsFilterForm, true);
     toggleDisableAttribute(window.data.selectsFilterForm, true);
     toggleDisableAttribute(window.data.fieldsetsAdForm, true);
+    window.movePin.setAddressInputValue(window.movePin.startMapPinMainCoords, false);
     window.card.map.classList.add('map--faded');
-    window.movePin.adForm.classList.add('ad-form--disabled');
+    window.data.adForm.classList.add('ad-form--disabled');
   };
 
   var doPageActive = function (isPageActivated) {
